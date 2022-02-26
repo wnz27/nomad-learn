@@ -2055,6 +2055,32 @@ func ACLPolicy() *structs.ACLPolicy {
 	return ap
 }
 
+func AuthMethod() *structs.AuthMethod {
+	config := &structs.AuthMethodConfig{
+		OIDCDiscoveryURL:    "http://www.google.com",
+		OIDCClientID:        "12345",
+		OIDCClientSecret:    "sjdfkjdefjedi",
+		BoundAudiences:      []string{"eng", "admin"},
+		DiscoveryCaPem:      []string{"pempempem"},
+		SigningAlgs:         []string{"RS256"},
+		AllowedRedirectURIs: []string{"http://www.google.com"},
+		ClaimMappings:       map[string]string{},
+		ListClaimMappings:   map[string]string{},
+	}
+
+	am := &structs.AuthMethod{
+		Name:        fmt.Sprintf("auth-method-%s", uuid.Generate()),
+		Type:        "oidc",
+		MaxTokenTTL: "5m",
+		Config:      *config,
+		CreateTime:  time.Now().UTC(),
+		CreateIndex: 10,
+		ModifyIndex: 20,
+	}
+	am.SetHash()
+	return am
+}
+
 func ACLToken() *structs.ACLToken {
 	tk := &structs.ACLToken{
 		AccessorID:  uuid.Generate(),

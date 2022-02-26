@@ -2343,6 +2343,59 @@ func TestFSM_DeleteACLPolicies(t *testing.T) {
 	assert.Nil(t, out)
 }
 
+func TestFSM_UpsertAuthMethods(t *testing.T) {
+	t.Parallel()
+	fsm := testFSM(t)
+
+	policy := mock.AuthMethod()
+	req := structs.AuthMethodUpsertRequest{
+		AuthMethods: []*structs.AuthMethod{policy},
+	}
+	buf, err := structs.Encode(structs.AuthMethodUpsertRequestType, req)
+	if err != nil {
+		t.Fatalf("err: %v", err)
+	}
+
+	resp := fsm.Apply(makeLog(buf))
+	if resp != nil {
+		t.Fatalf("resp: %v", resp)
+	}
+
+	// Verify we are registered
+	ws := memdb.NewWatchSet()
+	out, err := fsm.State().AuthMethodByName(ws, policy.Name)
+	assert.Nil(t, err)
+	assert.NotNil(t, out)
+}
+
+func TestFSM_DeleteAuthMethods(t *testing.T) {
+	t.Parallel()
+	fsm := testFSM(t)
+
+	policy := mock.AuthMethod()
+	err := fsm.State().UpsertAuthMethods(structs.MsgTypeTestSetup, 1000, []*structs.AuthMethod{policy})
+	assert.Nil(t, err)
+
+	req := structs.AuthMethodDeleteRequest{
+		Names: []string{policy.Name},
+	}
+	buf, err := structs.Encode(structs.AuthMethodDeleteRequestType, req)
+	if err != nil {
+		t.Fatalf("err: %v", err)
+	}
+
+	resp := fsm.Apply(makeLog(buf))
+	if resp != nil {
+		t.Fatalf("resp: %v", resp)
+	}
+
+	// Verify we are NOT registered
+	ws := memdb.NewWatchSet()
+	out, err := fsm.State().AuthMethodByName(ws, policy.Name)
+	assert.Nil(t, err)
+	assert.Nil(t, out)
+}
+
 func TestFSM_BootstrapACLTokens(t *testing.T) {
 	ci.Parallel(t)
 	fsm := testFSM(t)

@@ -5541,6 +5541,64 @@ func (s *StateStore) DeleteACLPolicies(msgType structs.MessageType, index uint64
 	return txn.Commit()
 }
 
+// UpsertAuthMethods is used to create or update a set of auth methods
+func (s *StateStore) UpsertAuthMethods(msgType structs.MessageType, index uint64, methods []*structs.AuthMethod) error {
+	txn := s.db.WriteTxnMsgT(msgType, index)
+	defer txn.Abort()
+
+	for _, authMethod := range methods {
+		// Ensure the authMethod hash is non-nil. This should be done outside the state store
+		// for performance reasons, but we check here for defense in depth.
+		if len(authMethod.Hash) == 0 {
+			authMethod.SetHash()
+		}
+
+		// Check if the authMethod already exists
+		existing, err := txn.First("auth_method", "id", authMethod.Name)
+		if err != nil {
+			return fmt.Errorf("auth method lookup failed: %v", err)
+		}
+
+		// Update all the indexes
+		if existing != nil {
+			authMethod.CreateIndex = existing.(*structs.AuthMethod).CreateIndex
+			authMethod.ModifyIndex = index
+		} else {
+			authMethod.CreateIndex = index
+			authMethod.ModifyIndex = index
+		}
+
+		// Update the authMethod
+		if err := txn.Insert("auth_method", authMethod); err != nil {
+			return fmt.Errorf("upserting auth method failed: %v", err)
+		}
+	}
+
+	// Update the indexes tabl
+	if err := txn.Insert("index", &IndexEntry{"auth_method", index}); err != nil {
+		return fmt.Errorf("index update failed: %v", err)
+	}
+
+	return txn.Commit()
+}
+
+// DeleteAuthMethods deletes the auth methods with the given names
+func (s *StateStore) DeleteAuthMethods(msgType structs.MessageType, index uint64, names []string) error {
+	txn := s.db.WriteTxnMsgT(msgType, index)
+	defer txn.Abort()
+
+	// Delete the auth_method
+	for _, name := range names {
+		if _, err := txn.DeleteAll("auth_method", "id", name); err != nil {
+			return fmt.Errorf("deleting auth method failed: %v", err)
+		}
+	}
+	if err := txn.Insert("index", &IndexEntry{"auth_method", index}); err != nil {
+		return fmt.Errorf("index update failed: %v", err)
+	}
+	return txn.Commit()
+}
+
 // ACLPolicyByName is used to lookup a policy by name
 func (s *StateStore) ACLPolicyByName(ws memdb.WatchSet, name string) (*structs.ACLPolicy, error) {
 	txn := s.db.ReadTxn()
@@ -5576,6 +5634,48 @@ func (s *StateStore) ACLPolicies(ws memdb.WatchSet) (memdb.ResultIterator, error
 
 	// Walk the entire table
 	iter, err := txn.Get("acl_policy", "id")
+	if err != nil {
+		return nil, err
+	}
+	ws.Add(iter.WatchCh())
+	return iter, nil
+}
+
+// AuthMethodByName is used to lookup an auth method by name
+func (s *StateStore) AuthMethodByName(ws memdb.WatchSet, name string) (*structs.AuthMethod, error) {
+	txn := s.db.ReadTxn()
+
+	watchCh, existing, err := txn.FirstWatch("auth_method", "id", name)
+	if err != nil {
+		return nil, fmt.Errorf("auth method lookup failed: %v", err)
+	}
+	ws.Add(watchCh)
+
+	if existing != nil {
+		return existing.(*structs.AuthMethod), nil
+	}
+	return nil, nil
+}
+
+// AuthMethodByNamePrefix is used to lookup auth methods by prefix
+func (s *StateStore) AuthMethodByNamePrefix(ws memdb.WatchSet, prefix string) (memdb.ResultIterator, error) {
+	txn := s.db.ReadTxn()
+
+	iter, err := txn.Get("auth_method", "id_prefix", prefix)
+	if err != nil {
+		return nil, fmt.Errorf("auth method lookup failed: %v", err)
+	}
+	ws.Add(iter.WatchCh())
+
+	return iter, nil
+}
+
+// AuthMethods returns an iterator over all the auth methods
+func (s *StateStore) AuthMethods(ws memdb.WatchSet) (memdb.ResultIterator, error) {
+	txn := s.db.ReadTxn()
+
+	// Walk the entire table
+	iter, err := txn.Get("auth_method", "id")
 	if err != nil {
 		return nil, err
 	}

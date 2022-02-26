@@ -445,6 +445,11 @@ func Commands(metaPtr *Meta, agentUi cli.Ui) map[string]cli.CommandFactory {
 				Meta: meta,
 			}, nil
 		},
+		"login": func() (cli.Command, error) {
+			return &LoginCommand{
+				Meta: meta,
+			}, nil
+		},
 		"monitor": func() (cli.Command, error) {
 			return &MonitorCommand{
 				Meta: meta,

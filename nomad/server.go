@@ -290,6 +290,8 @@ type endpoints struct {
 	System              *System
 	Operator            *Operator
 	ACL                 *ACL
+	AuthMethod          *AuthMethod
+	OIDC       					*OIDC
 	Scaling             *Scaling
 	Enterprise          *EnterpriseEndpoints
 	Event               *Event
@@ -1193,6 +1195,8 @@ func (s *Server) setupRpcServer(server *rpc.Server, ctx *RPCContext) error {
 	if s.staticEndpoints.Status == nil {
 		// Initialize the list just once
 		s.staticEndpoints.ACL = &ACL{srv: s, logger: s.logger.Named("acl")}
+		s.staticEndpoints.AuthMethod = &AuthMethod{srv: s, logger: s.logger.Named("auth_method")}
+		s.staticEndpoints.OIDC = &OIDC{srv: s, logger: s.logger.Named("oidc")}
 		s.staticEndpoints.Job = NewJobEndpoints(s)
 		s.staticEndpoints.CSIVolume = &CSIVolume{srv: s, logger: s.logger.Named("csi_volume")}
 		s.staticEndpoints.CSIPlugin = &CSIPlugin{srv: s, logger: s.logger.Named("csi_plugin")}
@@ -1239,6 +1243,8 @@ func (s *Server) setupRpcServer(server *rpc.Server, ctx *RPCContext) error {
 
 	// Register the static handlers
 	server.Register(s.staticEndpoints.ACL)
+	server.Register(s.staticEndpoints.AuthMethod)
+	server.Register(s.staticEndpoints.OIDC)
 	server.Register(s.staticEndpoints.Job)
 	server.Register(s.staticEndpoints.CSIVolume)
 	server.Register(s.staticEndpoints.CSIPlugin)

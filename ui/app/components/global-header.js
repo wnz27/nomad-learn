@@ -8,7 +8,12 @@ import { attributeBindings } from '@ember-decorators/component';
 export default class GlobalHeader extends Component {
   @service config;
   @service system;
+  @service token;
 
   'data-test-global-header' = true;
   onHamburgerClick() {}
+
+  get authText() {
+    return this.token.secret ? 'Authorization' : 'Login';
+  }
 }

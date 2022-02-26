@@ -22,6 +22,7 @@ const (
 	TopicJob        Topic = "Job"
 	TopicNode       Topic = "Node"
 	TopicACLPolicy  Topic = "ACLPolicy"
+	TopicAuthMethod Topic = "AuthMethod"
 	TopicACLToken   Topic = "ACLToken"
 	TopicService    Topic = "Service"
 	TopicAll        Topic = "*"
@@ -150,4 +151,8 @@ func (a *ACLTokenEvent) SecretID() string {
 
 type ACLPolicyEvent struct {
 	ACLPolicy *ACLPolicy
+}
+
+type AuthMethodEvent struct {
+	AuthMethod *AuthMethod
 }

@@ -59,7 +59,7 @@ const (
 	SecureVariablesQuotaSnapshot         SnapshotType = 23
 	RootKeyMetaSnapshot                  SnapshotType = 24
 	ACLRoleSnapshot                      SnapshotType = 25
-
+	AuthMethodSnapshot                   SnapshotType = 26
 	// Namespace appliers were moved from enterprise and therefore start at 64
 	NamespaceSnapshot SnapshotType = 64
 )
@@ -330,6 +330,10 @@ func (n *nomadFSM) Apply(log *raft.Log) interface{} {
 		return n.applyACLRolesUpsert(msgType, buf[1:], log.Index)
 	case structs.ACLRolesDeleteByIDRequestType:
 		return n.applyACLRolesDeleteByID(msgType, buf[1:], log.Index)
+	case structs.AuthMethodUpsertRequestType:
+		return n.applyAuthMethodUpsert(msgType, buf[1:], log.Index)
+	case structs.AuthMethodDeleteRequestType:
+		return n.applyAuthMethodDelete(msgType, buf[1:], log.Index)
 	}
 
 	// Check enterprise only message types.
@@ -1151,7 +1155,37 @@ func (n *nomadFSM) applyACLPolicyDelete(msgType structs.MessageType, buf []byte,
 	return nil
 }
 
-// applyACLTokenUpsert is used to upsert a set of policies
+// applyAuthMethodUpsert is used to upsert a set of auth methods
+func (n *nomadFSM) applyAuthMethodUpsert(msgType structs.MessageType, buf []byte, index uint64) interface{} {
+	defer metrics.MeasureSince([]string{"nomad", "fsm", "apply_auth_method_upsert"}, time.Now())
+	var req structs.AuthMethodUpsertRequest
+	if err := structs.Decode(buf, &req); err != nil {
+		panic(fmt.Errorf("failed to decode request: %v", err))
+	}
+
+	if err := n.state.UpsertAuthMethods(msgType, index, req.AuthMethods); err != nil {
+		n.logger.Error("UpsertAuthMethods failed", "error", err)
+		return err
+	}
+	return nil
+}
+
+// applyAuthMethodDelete is used to delete a set of auth methods
+func (n *nomadFSM) applyAuthMethodDelete(msgType structs.MessageType, buf []byte, index uint64) interface{} {
+	defer metrics.MeasureSince([]string{"nomad", "fsm", "apply_auth_method_delete"}, time.Now())
+	var req structs.AuthMethodDeleteRequest
+	if err := structs.Decode(buf, &req); err != nil {
+		panic(fmt.Errorf("failed to decode request: %v", err))
+	}
+
+	if err := n.state.DeleteAuthMethods(msgType, index, req.Names); err != nil {
+		n.logger.Error("DeleteAuthMethods failed", "error", err)
+		return err
+	}
+	return nil
+}
+
+// applyACLTokenUpsert is used to upsert a set of tokens
 func (n *nomadFSM) applyACLTokenUpsert(msgType structs.MessageType, buf []byte, index uint64) interface{} {
 	defer metrics.MeasureSince([]string{"nomad", "fsm", "apply_acl_token_upsert"}, time.Now())
 	var req structs.ACLTokenUpsertRequest
@@ -1611,6 +1645,15 @@ func (n *nomadFSM) restoreImpl(old io.ReadCloser, filter *FSMFilter) error {
 				if err := restore.DeploymentRestore(deployment); err != nil {
 					return err
 				}
+			}
+
+		case AuthMethodSnapshot:
+			am := new(structs.AuthMethod)
+			if err := dec.Decode(am); err != nil {
+				return err
+			}
+			if err := restore.AuthMethodRestore(am); err != nil {
+				return err
 			}
 
 		case ACLPolicySnapshot:
@@ -2231,6 +2274,10 @@ func (s *nomadSnapshot) Persist(sink raft.SnapshotSink) error {
 		sink.Cancel()
 		return err
 	}
+	if err := s.persistAuthMethods(sink, encoder); err != nil {
+		sink.Cancel()
+		return err
+	}
 	if err := s.persistACLTokens(sink, encoder); err != nil {
 		sink.Cancel()
 		return err
@@ -2586,6 +2633,34 @@ func (s *nomadSnapshot) persistACLPolicies(sink raft.SnapshotSink,
 		// Write out a policy registration
 		sink.Write([]byte{byte(ACLPolicySnapshot)})
 		if err := encoder.Encode(policy); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (s *nomadSnapshot) persistAuthMethods(sink raft.SnapshotSink,
+	encoder *codec.Encoder) error {
+	// Get all the auth methods
+	ws := memdb.NewWatchSet()
+	authMethods, err := s.snap.AuthMethods(ws)
+	if err != nil {
+		return err
+	}
+
+	for {
+		// Get the next item
+		raw := authMethods.Next()
+		if raw == nil {
+			break
+		}
+
+		// Prepare the request struct
+		authMethod := raw.(*structs.AuthMethod)
+
+		// Write out a authMethod registration
+		sink.Write([]byte{byte(AuthMethodSnapshot)})
+		if err := encoder.Encode(authMethod); err != nil {
 			return err
 		}
 	}

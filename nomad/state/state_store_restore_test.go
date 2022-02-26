@@ -393,6 +393,31 @@ func TestStateStore_RestoreSITokenAccessor(t *testing.T) {
 	r.False(wsFired)
 }
 
+func TestStateStore_RestoreAuthMethod(t *testing.T) {
+	t.Parallel()
+
+	state := testStateStore(t)
+	authMethod := mock.AuthMethod()
+
+	restore, err := state.Restore()
+	if err != nil {
+		t.Fatalf("err: %v", err)
+	}
+
+	err = restore.AuthMethodRestore(authMethod)
+	if err != nil {
+		t.Fatalf("err: %v", err)
+	}
+	require.NoError(t, restore.Commit())
+
+	ws := memdb.NewWatchSet()
+	out, err := state.AuthMethodByName(ws, authMethod.Name)
+	if err != nil {
+		t.Fatalf("err: %v", err)
+	}
+	assert.Equal(t, authMethod, out)
+}
+
 func TestStateStore_RestoreACLPolicy(t *testing.T) {
 	ci.Parallel(t)
 

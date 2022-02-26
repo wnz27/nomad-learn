@@ -1,21 +1,42 @@
 {{page-title "Tokens"}}
+
 <section class="section">
-  <h1 class="title">Access Control Tokens</h1>
+  <div class="notification is-info">
+    <div class="columns">
+      <div class="column">
+        <h3 class="title is-4">Token Storage</h3>
+        <p>Tokens are stored client-side in <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">local storage</a>. This will persist your token across sessions. You can manually clear your token here.</p>
+      </div>
+      <div class="column is-centered is-minimum">
+        <button data-test-token-clear class="button is-info" {{action "clearTokenProperties"}} type="button">Clear Token</button>
+      </div>
+    </div>
+  </div>
+
+  <h1 class="title">Access Control and Authorization</h1>
+
+  {{#if this.model.authMethods}}
+  <h2 class="title is-4">Sign In With SSO</h2>
+  <p class="message">Login to Nomad using on of the configured authorization providers:</p>
+
+  {{#each this.model.authMethods as |authMethod|}}
+    <button
+        data-test-inline-error-close
+        class="button is-info"
+        onclick={{perform this.authButtonClick authMethod}}
+        type="button"
+      >Login with {{authMethod.name}}
+      </button>
+    <br />
+  {{/each}}
+  {{/if}}
+
+  <br />
+  <h2 class="title is-4">Sign In With a Token</h2>
+
   <div class="columns">
     <div class="column is-two-thirds">
       <p class="message">Clusters that use Access Control Lists require tokens to perform certain tasks. By providing a token <strong>Secret ID</strong>, each future request will be authenticated, potentially authorizing read access to additional information. By providing a token <strong>Accessor ID</strong>, the policies and rules for the token will be listed.</p>
-
-      <div class="notification is-info">
-        <div class="columns">
-          <div class="column">
-            <h3 class="title is-4">Token Storage</h3>
-            <p>Tokens are stored client-side in <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">local storage</a>. This will persist your token across sessions. You can manually clear your token here.</p>
-          </div>
-          <div class="column is-centered is-minimum">
-            <button data-test-token-clear class="button is-info" {{action "clearTokenProperties"}} type="button">Clear Token</button>
-          </div>
-        </div>
-      </div>
 
       {{#unless this.tokenIsValid}}
         <div class="field">

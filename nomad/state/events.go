@@ -136,6 +136,18 @@ func eventFromChange(change memdb.Change) (structs.Event, bool) {
 				ACLPolicy: after,
 			},
 		}, true
+	case "auth_method":
+		after, ok := change.After.(*structs.AuthMethod)
+		if !ok {
+			return structs.Event{}, false
+		}
+		return structs.Event{
+			Topic: structs.TopicAuthMethod,
+			Key:   after.Name,
+			Payload: &structs.AuthMethodEvent{
+				AuthMethod: after,
+			},
+		}, true
 	case "evals":
 		after, ok := change.After.(*structs.Evaluation)
 		if !ok {

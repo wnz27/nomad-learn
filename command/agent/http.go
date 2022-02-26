@@ -374,6 +374,12 @@ func (s HTTPServer) registerHandlers(enableDebug bool) {
 	s.mux.HandleFunc("/v1/acl/policies", s.wrap(s.ACLPoliciesRequest))
 	s.mux.HandleFunc("/v1/acl/policy/", s.wrap(s.ACLPolicySpecificRequest))
 
+	s.mux.HandleFunc("/v1/auth_methods", s.wrap(s.AuthMethodsRequest))
+	s.mux.HandleFunc("/v1/auth_method/", s.wrap(s.AuthMethodSpecificRequest))
+
+	s.mux.HandleFunc("/v1/oidc/auth-url", s.wrap(s.OIDCAuthURLRequest))
+	s.mux.HandleFunc("/v1/oidc/callback", s.wrap(s.OIDCCallbackRequest))
+
 	s.mux.HandleFunc("/v1/acl/token/onetime", s.wrap(s.UpsertOneTimeToken))
 	s.mux.HandleFunc("/v1/acl/token/onetime/exchange", s.wrap(s.ExchangeOneTimeToken))
 	s.mux.HandleFunc("/v1/acl/bootstrap", s.wrap(s.ACLTokenBootstrap))

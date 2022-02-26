@@ -54,6 +54,11 @@ var (
 	b32 = base32.NewEncoding(strings.ToLower("abcdefghijklmnopqrstuvwxyz234567"))
 )
 
+var (
+	// validAuthMethodName is used to validate a policy name
+	validAuthMethodName = regexp.MustCompile("^[a-zA-Z0-9-]{1,128}$")
+)
+
 type MessageType uint8
 
 // note: new raft message types need to be added to the end of this
@@ -115,6 +120,9 @@ const (
 	RootKeyMetaDeleteRequestType                 MessageType = 53
 	ACLRolesUpsertRequestType                    MessageType = 54
 	ACLRolesDeleteByIDRequestType                MessageType = 55
+	AuthMethodUpsertRequestType                  MessageType = 56
+	AuthMethodDeleteRequestType                  MessageType = 57
+	AuthMethodBootstrapRequestType               MessageType = 58
 
 	// Namespace types were moved from enterprise and therefore start at 64
 	NamespaceUpsertRequestType MessageType = 64
@@ -11797,6 +11805,29 @@ type ACLPolicy struct {
 	ModifyIndex uint64
 }
 
+type AuthMethodConfig struct {
+	OIDCDiscoveryURL    string
+	OIDCClientID        string
+	OIDCClientSecret    string
+	BoundAudiences      []string
+	AllowedRedirectURIs []string
+	DiscoveryCaPem      []string
+	SigningAlgs         []string
+	ClaimMappings       map[string]string
+	ListClaimMappings   map[string]string
+}
+
+type AuthMethod struct {
+	Name        string
+	Type        string
+	MaxTokenTTL string
+	Config      AuthMethodConfig
+	CreateTime  time.Time
+	Hash        []byte
+	CreateIndex uint64
+	ModifyIndex uint64
+}
+
 // SetHash is used to compute and set the hash of the ACL policy
 func (a *ACLPolicy) SetHash() []byte {
 	// Initialize a 256bit Blake2 hash (32 bytes)
@@ -11815,6 +11846,50 @@ func (a *ACLPolicy) SetHash() []byte {
 
 	// Set and return the hash
 	a.Hash = hashVal
+	return hashVal
+}
+
+// SetHash is used to compute and set the hash of the ACL policy
+func (am *AuthMethod) SetHash() []byte {
+	// Initialize a 256bit Blake2 hash (32 bytes)
+	hash, err := blake2b.New256(nil)
+	if err != nil {
+		panic(err)
+	}
+
+	// Write all the user set fields
+	_, _ = hash.Write([]byte(am.Name))
+	_, _ = hash.Write([]byte(am.Type))
+	_, _ = hash.Write([]byte(am.MaxTokenTTL))
+
+	_, _ = hash.Write([]byte(am.Config.OIDCClientID))
+	_, _ = hash.Write([]byte(am.Config.OIDCClientSecret))
+	_, _ = hash.Write([]byte(am.Config.OIDCDiscoveryURL))
+
+	for _, ba := range am.Config.BoundAudiences {
+		_, _ = hash.Write([]byte(ba))
+	}
+	for _, uri := range am.Config.AllowedRedirectURIs {
+		_, _ = hash.Write([]byte(uri))
+	}
+
+	// TODO: IS THIS CORRECT?
+
+	// for k, v := range am.Config.ClaimMappings {
+	// 	_, _ = hash.Write([]byte(k))
+	// 	_, _ = hash.Write([]byte(v))
+	// }
+
+	// for k, v := range am.Config.ListClaimMappings {
+	// 	_, _ = hash.Write([]byte(k))
+	// 	_, _ = hash.Write([]byte(v))
+	// }
+
+	// Finalize the hash
+	hashVal := hash.Sum(nil)
+
+	// Set and return the hash
+	am.Hash = hashVal
 	return hashVal
 }
 
@@ -11843,6 +11918,123 @@ func (a *ACLPolicy) Validate() error {
 		mErr.Errors = append(mErr.Errors, err)
 	}
 	return mErr.ErrorOrNil()
+}
+
+func (am *AuthMethod) Stub() *AuthMethodListStub {
+	return &AuthMethodListStub{
+		Config:      am.Config,
+		CreateIndex: am.CreateIndex,
+		Hash:        am.Hash,
+		MaxTokenTTL: am.MaxTokenTTL,
+		ModifyIndex: am.ModifyIndex,
+		Name:        am.Name,
+		Type:        am.Type,
+	}
+}
+
+func (am *AuthMethod) Validate() error {
+	var mErr multierror.Error
+	if !validAuthMethodName.MatchString(am.Name) {
+		err := fmt.Errorf("invalid name '%s'", am.Name)
+		mErr.Errors = append(mErr.Errors, err)
+	}
+
+	// TODO:  Add more AuthMethod Validations
+	// IE Type or URLs
+
+	return mErr.ErrorOrNil()
+}
+
+type AuthMethodListStub struct {
+	Name        string
+	Type        string
+	MaxTokenTTL string
+	Config      AuthMethodConfig
+	CreateTime  time.Time
+	CreateIndex uint64
+	ModifyIndex uint64
+	Hash        []byte
+}
+
+// ACLPolicyListRequest is used to request a list of policies
+type AuthMethodListRequest struct {
+	QueryOptions
+}
+
+// ACLPolicySpecificRequest is used to query a specific policy
+type AuthMethodSpecificRequest struct {
+	Name string
+	QueryOptions
+}
+
+// AuthMethodSetRequest is used to query a set of policies
+type AuthMethodSetRequest struct {
+	Names []string
+	QueryOptions
+}
+
+// AuthMethodListResponse is used for a list request
+type AuthMethodListResponse struct {
+	AuthMethods []*AuthMethodListStub
+	QueryMeta
+}
+
+// SingleAuthMethodResponse is used to return a single policy
+type SingleAuthMethodResponse struct {
+	AuthMethod *AuthMethod
+	QueryMeta
+}
+
+// AuthMethodSetResponse is used to return a set of policies
+type AuthMethodSetResponse struct {
+	AuthMethods map[string]*AuthMethod
+	QueryMeta
+}
+
+// AuthMethodDeleteRequest is used to delete a set of policies
+type AuthMethodDeleteRequest struct {
+	Names []string
+	WriteRequest
+}
+
+// AuthMethodUpsertRequest is used to upsert a set of policies
+type AuthMethodUpsertRequest struct {
+	AuthMethods []*AuthMethod
+	WriteRequest
+}
+
+type OIDCAuthURLResponse struct {
+	URL string
+}
+
+type OIDCAuthURLParams struct {
+	AuthMethod  string
+	RedirectURI string
+	ClientNonce string
+	Meta        map[string]string `json:",omitempty"`
+}
+
+type OIDCAuthURLRequest struct {
+	Auth *OIDCAuthURLParams
+	WriteRequest
+}
+
+type OIDCCallbackParams struct {
+	AuthMethod  string
+	State       string
+	Code        string
+	ClientNonce string
+	RedirectURI string
+}
+
+type OIDCCallbackRequest struct {
+	Auth       *OIDCCallbackParams
+	Datacenter string // The datacenter to perform the request within
+	WriteRequest
+}
+
+type OIDCCallbackResponse struct {
+	Token string
 }
 
 // ACLPolicyListStub is used to for listing ACL policies

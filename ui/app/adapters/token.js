@@ -41,4 +41,31 @@ export default class TokenAdapter extends ApplicationAdapter {
         throw new OTTExchangeError();
       });
   }
+
+  getAuthURL(authParams) {
+    return this.ajax(`/v1/oidc/auth-url`, 'POST', {
+      data: {
+        ...authParams,
+      },
+    }).then((json) => {
+      console.log(json);
+      return json.URL;
+    });
+  }
+
+  completeOidc({ code, state }) {
+    let data = {
+      AuthMethod: window.localStorage.getItem('nomadOIDCAuthMethod'),
+      RedirectUri: 'http://localhost:4200/ui/oidc/callback',
+      ClientNonce: window.localStorage.getItem('nomadOIDCNonce'),
+      Code: code,
+      State: state,
+    };
+
+    return this.ajax(`/v1/oidc/callback`, 'POST', {
+      data,
+    }).then((token) => {
+      return token;
+    });
+  }
 }

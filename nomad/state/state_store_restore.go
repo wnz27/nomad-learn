@@ -119,6 +119,14 @@ func (r *StateRestore) ACLPolicyRestore(policy *structs.ACLPolicy) error {
 	return nil
 }
 
+// AuthMethodRestore is used to restore an auth method
+func (r *StateRestore) AuthMethodRestore(am *structs.AuthMethod) error {
+	if err := r.txn.Insert("auth_method", am); err != nil {
+		return fmt.Errorf("inserting auth method failed: %v", err)
+	}
+	return nil
+}
+
 // ACLTokenRestore is used to restore an ACL token
 func (r *StateRestore) ACLTokenRestore(token *structs.ACLToken) error {
 	if err := r.txn.Insert("acl_token", token); err != nil {

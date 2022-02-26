@@ -83,6 +83,7 @@ func init() {
 		secureVariablesQuotasTableSchema,
 		secureVariablesRootKeyMetaSchema,
 		aclRolesTableSchema,
+		authMethodTableSchema,
 	}...)
 }
 
@@ -771,6 +772,24 @@ func siTokenAccessorTableSchema() *memdb.TableSchema {
 func aclPolicyTableSchema() *memdb.TableSchema {
 	return &memdb.TableSchema{
 		Name: "acl_policy",
+		Indexes: map[string]*memdb.IndexSchema{
+			"id": {
+				Name:         "id",
+				AllowMissing: false,
+				Unique:       true,
+				Indexer: &memdb.StringFieldIndex{
+					Field: "Name",
+				},
+			},
+		},
+	}
+}
+
+// authMethodTableSchema returns the MemDB schema for the policy table.
+// This table is used to store the policies which are referenced by tokens
+func authMethodTableSchema() *memdb.TableSchema {
+	return &memdb.TableSchema{
+		Name: "auth_method",
 		Indexes: map[string]*memdb.IndexSchema{
 			"id": {
 				Name:         "id",
