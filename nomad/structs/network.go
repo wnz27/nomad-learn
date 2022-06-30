@@ -48,7 +48,7 @@ type NetworkIndex struct {
 	MaxDynamicPort int // The largest dynamic port generated
 }
 
-// NewNetworkIndex is used to construct a new network index
+// newnetworkindex is used to construct a new network index
 func NewNetworkIndex() *NetworkIndex {
 	return &NetworkIndex{
 		AvailAddresses: make(map[string][]NodeNetworkAddress),

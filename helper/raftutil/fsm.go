@@ -20,6 +20,7 @@ type nomadFSM interface {
 	raft.FSM
 	State() *state.StateStore
 	Restore(io.ReadCloser) error
+	RestoreFiltered(io.ReadCloser, *nomad.FSMFilter) error
 }
 
 type FSMHelper struct {

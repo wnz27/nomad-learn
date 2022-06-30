@@ -6,7 +6,9 @@ import (
 	"os"
 	"strings"
 
+	flaghelper "github.com/hashicorp/nomad/helper/flags"
 	"github.com/hashicorp/nomad/helper/raftutil"
+	"github.com/hashicorp/nomad/nomad"
 	"github.com/posener/complete"
 )
 
@@ -42,6 +44,18 @@ func (c *OperatorSnapshotStateCommand) Synopsis() string {
 func (c *OperatorSnapshotStateCommand) Name() string { return "operator snapshot state" }
 
 func (c *OperatorSnapshotStateCommand) Run(args []string) int {
+	var jobs, nodes flaghelper.StringFlag
+
+	flags := c.Meta.FlagSet(c.Name(), FlagSetClient)
+	flags.Usage = func() { c.Ui.Output(c.Help()) }
+
+	flags.Var(&jobs, "job", "")
+	flags.Var(&nodes, "node", "")
+	if err := flags.Parse(args); err != nil {
+		c.Ui.Error(fmt.Sprintf("Failed to parse args: %v", err))
+		return 1
+	}
+
 	// Check that we either got no filename or exactly one.
 	if len(args) != 1 {
 		c.Ui.Error("This command takes one argument: <file>")
@@ -57,7 +71,12 @@ func (c *OperatorSnapshotStateCommand) Run(args []string) int {
 	}
 	defer f.Close()
 
-	state, meta, err := raftutil.RestoreFromArchive(f)
+	filter := &nomad.FSMFilter{
+		Jobs:  jobs,
+		Nodes: nodes,
+	}
+
+	state, meta, err := raftutil.RestoreFromArchive(f, filter)
 	if err != nil {
 		c.Ui.Error(fmt.Sprintf("Failed to read archive file: %s", err))
 		return 1

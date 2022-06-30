@@ -1453,6 +1453,7 @@ func (n *nomadFSM) Restore(old io.ReadCloser) error {
 			if err := dec.Decode(node); err != nil {
 				return err
 			}
+			fmt.Println("node:", node.ID)
 
 			// Handle upgrade paths
 			node.Canonicalize()
@@ -1466,6 +1467,7 @@ func (n *nomadFSM) Restore(old io.ReadCloser) error {
 			if err := dec.Decode(job); err != nil {
 				return err
 			}
+			fmt.Println("job:", job.ID)
 
 			/* Handle upgrade paths:
 			 * - Empty maps and slices should be treated as nil to avoid

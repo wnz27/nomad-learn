@@ -2132,3 +2132,275 @@ func TestSystemSched_canHandle(t *testing.T) {
 		require.False(t, s.canHandle(structs.EvalTriggerPeriodicJob))
 	})
 }
+
+func TestAllocFitComparison(t *testing.T) {
+
+	h := NewHarness(t)
+
+	node := mock.Node()
+	require.Equal(t, []structs.Port{{Label: "ssh", Value: 22}},
+		node.Reserved.Networks[0].ReservedPorts)
+	require.NoError(t, h.State.UpsertNode(structs.MsgTypeTestSetup, h.NextIndex(), node))
+
+	// system job
+	job := mock.SystemJob()
+	job.Status = structs.JobStatusRunning
+	job.TaskGroups[0].Tasks[0].Resources.Networks = nil
+	job.TaskGroups[0].Networks = []*structs.NetworkResource{
+		{
+			Mode: "host",
+			ReservedPorts: []structs.Port{
+				{
+					Label:       "foo",
+					Value:       6831,
+					HostNetwork: "default",
+				},
+				{
+					Label:       "bar",
+					Value:       9411,
+					HostNetwork: "default",
+				},
+			},
+			DynamicPorts: []structs.Port{
+				{
+					Label:       "baz",
+					Value:       26041,
+					HostNetwork: "default",
+				},
+			},
+		},
+	}
+	require.NoError(t, h.State.UpsertJob(structs.MsgTypeTestSetup, h.NextIndex(), job))
+
+	// re-evaluate
+	eval := &structs.Evaluation{
+		Namespace:   structs.DefaultNamespace,
+		ID:          uuid.Generate(),
+		Priority:    job.Priority,
+		TriggeredBy: structs.EvalTriggerJobRegister,
+		JobID:       job.ID,
+		Status:      structs.EvalStatusPending,
+	}
+
+	require.NoError(t, h.State.UpsertEvals(
+		structs.MsgTypeTestSetup, h.NextIndex(), []*structs.Evaluation{eval}))
+
+	// Process the evaluation
+	err := h.Process(NewSystemScheduler, eval)
+	require.NoError(t, err)
+	require.Len(t, h.Plans, 1)
+	plan := h.Plans[0]
+
+	require.Len(t, plan.NodeAllocation[node.ID], 1)
+	alloc0 := plan.NodeAllocation[node.ID][0]
+	require.NoError(t, h.State.UpsertAllocs(
+		structs.MsgTypeTestSetup, h.NextIndex(), plan.NodeAllocation[node.ID]))
+
+	// Update task states for alloc
+	alloc0 = alloc0.Copy()
+	alloc0.ClientStatus = structs.AllocClientStatusRunning
+	alloc0.AllocStates = nil
+	alloc0.PreviousAllocation = uuid.Generate()
+	alloc0.ClientStatus = structs.AllocClientStatusFailed
+	h.State.UpdateAllocsFromClient(
+		structs.MsgTypeTestSetup, h.NextIndex(), []*structs.Allocation{alloc0})
+
+	// re-evaluate the job
+	eval.ID = uuid.Generate()
+	require.NoError(t, h.State.UpsertEvals(
+		structs.MsgTypeTestSetup, h.NextIndex(), []*structs.Evaluation{eval}))
+	require.NoError(t, err)
+
+	// Process and get an update-in-place plan
+	err = h.Process(NewSystemScheduler, eval)
+	require.NoError(t, err)
+	require.Len(t, h.Plans, 2)
+
+	fmt.Printf("original    %s\n", alloc0.ID)
+
+	require.Len(t, alloc0.Resources.Networks[0].ReservedPorts, 2)
+	require.Len(t, alloc0.Resources.Networks[0].DynamicPorts, 1)
+
+	require.Len(t, alloc0.SharedResources.Networks[0].ReservedPorts, 2)
+	require.Len(t, alloc0.SharedResources.Networks[0].DynamicPorts, 1)
+
+	require.Nil(t, alloc0.TaskResources["web"].Networks)
+	require.Nil(t, alloc0.AllocatedResources.Tasks["web"].Networks)
+	require.Len(t, alloc0.AllocatedResources.Shared.Networks[0].ReservedPorts, 2)
+	require.Len(t, alloc0.AllocatedResources.Shared.Networks[0].DynamicPorts, 1)
+	require.Len(t, alloc0.AllocatedResources.Shared.Ports, 3)
+
+	// spew.Dump(alloc0.AllocatedResources)
+
+	plan = h.Plans[1]
+	require.Len(t, plan.NodeUpdate[node.ID], 0)
+	require.Len(t, plan.NodeAllocation[node.ID], 1)
+
+	newAlloc := plan.NodeAllocation[node.ID][0]
+	fmt.Printf("replacement %s => %s\n", newAlloc.ID, newAlloc.DesiredStatus)
+
+	//spew.Dump(newAlloc.AllocatedResources)
+	fmt.Println("-----------")
+
+	ok, reason, comparable, err := structs.AllocsFit(
+		node, plan.NodeAllocation[node.ID], nil, false)
+	require.True(t, ok)
+	require.Equal(t, "", reason)
+	require.Len(t, comparable.Flattened.Networks[0].ReservedPorts, 2)
+	require.NoError(t, err)
+}
+
+// func TestWhyNoStop(t *testing.T) {
+// 	h := NewHarness(t)
+
+// 	node := mock.Node()
+// 	require.NoError(t, h.State.UpsertNode(structs.MsgTypeTestSetup, h.NextIndex(), node))
+
+// 	// system job
+// 	job := mock.SystemJob()
+// 	job.Status = structs.JobStatusRunning
+// 	job.TaskGroups[0].Tasks[0].Resources.Networks = nil
+// 	job.TaskGroups[0].Networks = []*structs.NetworkResource{
+// 		{
+// 			Mode: "host",
+// 			ReservedPorts: []structs.Port{
+// 				{
+// 					Label:       "foo",
+// 					Value:       6831,
+// 					HostNetwork: "default",
+// 				},
+// 				{
+// 					Label:       "bar",
+// 					Value:       9411,
+// 					HostNetwork: "default",
+// 				},
+// 			},
+// 			DynamicPorts: []structs.Port{
+// 				{
+// 					Label:       "baz",
+// 					Value:       26041,
+// 					HostNetwork: "default",
+// 				},
+// 			},
+// 		},
+// 	}
+// 	require.NoError(t, h.State.UpsertJob(structs.MsgTypeTestSetup, h.NextIndex(), job))
+
+// 	// re-evaluate
+// 	eval := &structs.Evaluation{
+// 		Namespace:   structs.DefaultNamespace,
+// 		ID:          uuid.Generate(),
+// 		Priority:    job.Priority,
+// 		TriggeredBy: structs.EvalTriggerJobRegister,
+// 		JobID:       job.ID,
+// 		Status:      structs.EvalStatusPending,
+// 	}
+
+// 	require.NoError(t, h.State.UpsertEvals(
+// 		structs.MsgTypeTestSetup, h.NextIndex(), []*structs.Evaluation{eval}))
+
+// 	// Process the evaluation
+// 	err := h.Process(NewSystemScheduler, eval)
+// 	require.NoError(t, err)
+// 	require.Len(t, h.Plans, 1)
+// 	plan := h.Plans[0]
+
+// 	require.Len(t, plan.NodeAllocation[node.ID], 1)
+// 	alloc0 := plan.NodeAllocation[node.ID][0]
+// 	require.NoError(t, h.State.UpsertAllocs(
+// 		structs.MsgTypeTestSetup, h.NextIndex(), plan.NodeAllocation[node.ID]))
+
+// 	// Update task states for alloc
+// 	alloc0 = alloc0.Copy()
+// 	alloc0.TaskStates = map[string]*structs.TaskState{"web": &structs.TaskState{
+// 		State:     "running",
+// 		StartedAt: time.Now(),
+// 		Events: []*structs.TaskEvent{
+// 			{
+// 				Type:           structs.TaskReceived,
+// 				Time:           time.Now().UnixNano(),
+// 				DisplayMessage: "Task received by client",
+// 				Details:        map[string]string{},
+// 			},
+// 		},
+// 	}}
+// 	alloc0.ClientStatus = structs.AllocClientStatusRunning
+// 	alloc0.AllocStates = nil
+// 	alloc0.NetworkStatus = &structs.AllocNetworkStatus{
+// 		InterfaceName: "",
+// 		Address:       "",
+// 		DNS:           nil,
+// 	}
+// 	alloc0.PreviousAllocation = uuid.Generate()
+// 	alloc0.ClientStatus = structs.AllocClientStatusFailed
+// 	h.State.UpdateAllocsFromClient(
+// 		structs.MsgTypeTestSetup, h.NextIndex(), []*structs.Allocation{alloc0})
+
+// 	// Re-evaluate the job
+// 	eval.ID = uuid.Generate()
+// 	require.NoError(t, h.State.UpsertEvals(
+// 		structs.MsgTypeTestSetup, h.NextIndex(), []*structs.Evaluation{eval}))
+// 	require.NoError(t, err)
+
+// 	// Process and get an update-in-place plan
+// 	err = h.Process(NewSystemScheduler, eval)
+// 	require.NoError(t, err)
+// 	require.Len(t, h.Plans, 2)
+
+// 	fmt.Println("original allocID: ", alloc0.ID)
+
+// 	plan = h.Plans[1]
+// 	for _, alloc := range plan.NodeUpdate[node.ID] {
+// 		fmt.Printf("%s => %s (%s)\n", alloc.ID, alloc.DesiredStatus, alloc.DesiredDescription)
+// 	}
+// 	for _, alloc := range plan.NodeAllocation[node.ID] {
+// 		fmt.Printf("%s => %s (%v)\n", alloc.ID, alloc.DesiredStatus, alloc.DesiredDescription)
+// 	}
+
+// 	alloc0.ClientStatus = structs.AllocClientStatusRunning
+// 	h.State.UpdateAllocsFromClient(
+// 		structs.MsgTypeTestSetup, h.NextIndex(), []*structs.Allocation{alloc0})
+
+// 	result, newState, err := h.SubmitPlan(plan)
+// 	require.NoError(t, err)
+// 	fmt.Printf("result => %#v\n", result)
+// 	fmt.Printf("newState => %#v\n", newState)
+
+// 	require.False(t, result.IsNoOp())
+
+// 	for _, alloc := range result.NodeAllocation[node.ID] {
+// 		fmt.Printf("submitted %s => %s (%v)\n", alloc.ID, alloc.DesiredStatus, alloc.DesiredDescription)
+// 	}
+// }
+
+// plan = h.Plans[1]
+
+// for _, alloc := range
+// alloc0.Job = job
+// alloc0.JobID = job.ID
+// alloc0.NodeID = node.ID
+// alloc0.DesiredStatus = structs.AllocDesiredStatusRun
+
+// require.NoError(t, h.State.UpsertAllocs(
+// 	structs.MsgTypeTestSetup, h.NextIndex(), []*structs.Allocation{alloc0}))
+
+// fmt.Println("original allocID: ", alloc0.ID)
+// for _, alloc := range plan.NodeUpdate[node.ID] {
+// 	fmt.Printf("%s => %s (%s)\n", alloc.ID, alloc.DesiredStatus, alloc.DesiredDescription)
+// }
+// if plan.Annotations != nil {
+// 	fmt.Printf("%v\n", plan.Annotations.DesiredTGUpdates[alloc0.TaskGroup])
+// }
+// for _, alloc := range plan.NodeAllocation[node.ID] {
+// 	fmt.Printf("%s => %s (%s)\n", alloc.ID, alloc.DesiredStatus, alloc.DesiredDescription)
+// }
+
+// alloc0 = alloc0.Copy()
+// alloc0.ClientStatus = structs.AllocClientStatusRunning
+// // alloc0.NetworkStatus = &structs.AllocNetworkStatus{
+// // 	InterfaceName: "",
+// // 	Address:       "",
+// // 	DNS:           nil,
+// // }
+// h.State.UpdateAllocsFromClient(
+// 	structs.MsgTypeTestSetup, h.NextIndex(), []*structs.Allocation{alloc0})
