@@ -2971,6 +2971,34 @@ func TestFSM_ReconcileSummaries(t *testing.T) {
 	}
 }
 
+func TestFSM_SnapshotRestore_ACLRoles(t *testing.T) {
+	ci.Parallel(t)
+
+	// Create our initial FSM which will be snapshotted.
+	fsm := testFSM(t)
+	testState := fsm.State()
+
+	// Generate and upsert some ACL roles.
+	aclRoles := []*structs.ACLRole{mock.ACLRole(), mock.ACLRole()}
+	require.NoError(t, testState.UpsertACLRoles(structs.MsgTypeTestSetup, 10, aclRoles))
+
+	// Perform a snapshot restore.
+	restoredFSM := testSnapshotRestore(t, fsm)
+	restoredState := restoredFSM.State()
+
+	// List the ACL roles from restored state and ensure everything is as
+	// expected.
+	iter, err := restoredState.GetACLRoles(memdb.NewWatchSet())
+	require.NoError(t, err)
+
+	var restoredACLRoles []*structs.ACLRole
+
+	for raw := iter.Next(); raw != nil; raw = iter.Next() {
+		restoredACLRoles = append(restoredACLRoles, raw.(*structs.ACLRole))
+	}
+	require.ElementsMatch(t, restoredACLRoles, aclRoles)
+}
+
 // COMPAT: Remove in 0.11
 func TestFSM_ReconcileParentJobSummary(t *testing.T) {
 	// This test exercises code to handle https://github.com/hashicorp/nomad/issues/3886
@@ -3411,6 +3439,55 @@ func TestFSM_SnapshotRestore_SecureVariables(t *testing.T) {
 		restoredSVs = append(restoredSVs, raw.(*structs.SecureVariableEncrypted))
 	}
 	require.ElementsMatch(t, restoredSVs, svs)
+}
+
+func TestFSM_ApplyACLRolesUpsert(t *testing.T) {
+	ci.Parallel(t)
+	fsm := testFSM(t)
+
+	// Generate the upsert request and apply the change.
+	req := structs.ACLRolesUpsertRequest{
+		ACLRoles: []*structs.ACLRole{mock.ACLRole(), mock.ACLRole()},
+	}
+	buf, err := structs.Encode(structs.ACLRolesUpsertRequestType, req)
+	require.NoError(t, err)
+	require.Nil(t, fsm.Apply(makeLog(buf)))
+
+	// Read out both ACL roles and perform an equality check using the hash.
+	ws := memdb.NewWatchSet()
+	out, err := fsm.State().GetACLRoleByName(ws, req.ACLRoles[0].Name)
+	require.NoError(t, err)
+	require.Equal(t, req.ACLRoles[0].Hash, out.Hash)
+
+	out, err = fsm.State().GetACLRoleByName(ws, req.ACLRoles[1].Name)
+	require.NoError(t, err)
+	require.Equal(t, req.ACLRoles[1].Hash, out.Hash)
+}
+
+func TestFSM_ApplyACLRolesDeleteByName(t *testing.T) {
+	ci.Parallel(t)
+	fsm := testFSM(t)
+
+	// Generate and upsert two ACL roles.
+	aclRoles := []*structs.ACLRole{mock.ACLRole(), mock.ACLRole()}
+	require.NoError(t, fsm.State().UpsertACLRoles(structs.MsgTypeTestSetup, 10, aclRoles))
+
+	// Build and apply our message.
+	req := structs.ACLRolesDeleteByNameRequest{ACLRoleNames: []string{aclRoles[0].Name, aclRoles[1].Name}}
+	buf, err := structs.Encode(structs.ACLRolesDeleteByNameRequestType, req)
+	require.NoError(t, err)
+	require.Nil(t, fsm.Apply(makeLog(buf)))
+
+	// List all ACL roles within state to ensure both have been removed.
+	ws := memdb.NewWatchSet()
+	iter, err := fsm.State().GetACLRoles(ws)
+	require.NoError(t, err)
+
+	var count int
+	for raw := iter.Next(); raw != nil; raw = iter.Next() {
+		count++
+	}
+	require.Equal(t, 0, count)
 }
 
 func TestFSM_ACLEvents(t *testing.T) {
