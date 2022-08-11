@@ -42,7 +42,7 @@ func (a *AuthMethods) Delete(methodName string, q *WriteOptions) (*WriteMeta, er
 	if methodName == "" {
 		return nil, fmt.Errorf("missing method name")
 	}
-	wm, err := a.client.delete("/v1/auth_methods/"+methodName, nil, q)
+	wm, err := a.client.delete("/v1/auth_methods/"+methodName, nil, nil, q)
 	if err != nil {
 		return nil, err
 	}

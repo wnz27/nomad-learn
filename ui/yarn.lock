@@ -44,21 +44,6 @@
   dependencies:
     "@babel/highlight" "^7.14.5"
 
-<<<<<<< HEAD
-=======
-"@babel/code-frame@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.16.7.tgz#44416b6bd7624b998f5b1af5d470856c40138789"
-  integrity sha512-iAXqUn8IIeBTNd72xsFlgaXHkMBMt6y4HJp1tIaK465CWLT/fG1aqB7ykr95gHHmlBdGbFeWWfyB4NJJ0nmeIg==
-  dependencies:
-    "@babel/highlight" "^7.16.7"
-
-"@babel/compat-data@^7.12.5", "@babel/compat-data@^7.12.7":
-  version "7.12.7"
-  resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.12.7.tgz#9329b4782a7d6bbd7eef57e11addf91ee3ef1e41"
-  integrity sha512-YaxPMGs/XIWtYqrdEOZOCPsVWfEoriXopnsz3/i7apYPXQ3698UFhS6dVT1KN5qOsWmVgw/FOrmQgpRaZayGsw==
-
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 "@babel/compat-data@^7.13.0", "@babel/compat-data@^7.13.8":
   version "7.13.12"
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.13.12.tgz#a8a5ccac19c200f9dd49624cac6e19d7be1236a1"
@@ -74,11 +59,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.16.0.tgz#ea269d7f78deb3a7826c39a4048eecda541ebdaa"
   integrity sha512-DGjt2QZse5SGd9nfOSqO4WLJ8NN/oHkijbXbPrxuoJO3oIPJL3TciZs9FX+cOHNiY9E9l0opL8g7BmLe3T+9ew==
 
-<<<<<<< HEAD
 "@babel/compat-data@^7.16.4", "@babel/compat-data@^7.16.8", "@babel/compat-data@^7.17.0":
-=======
-"@babel/compat-data@^7.16.4":
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "7.17.0"
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.17.0.tgz#86850b8597ea6962089770952075dcaabb8dba34"
   integrity sha512-392byTlpGWXMv4FbyWw3sAZ/FrW/DrwqLGXpy0mbyNe9Taqv1mg9yON5/o0cnr8XYCkFTZbC1eV+c+LAROgrng==
@@ -105,11 +86,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-<<<<<<< HEAD
 "@babel/core@^7.0.0", "@babel/core@^7.12.3":
-=======
-"@babel/core@^7.0.0", "@babel/core@^7.1.6", "@babel/core@^7.12.0", "@babel/core@^7.12.3", "@babel/core@^7.3.4", "@babel/core@^7.7.0":
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "7.12.10"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.12.10.tgz#b79a2e1b9f70ed3d84bbfb6d8c4ef825f606bccd"
   integrity sha512-eTAlQKq65zHfkHZV0sIVODCPGVgoo1HdBlbSLi9CqOzuZanMv2ihzY+4paiKr1mH+XmYESMAmJ/dpZ68eN6d8w==
@@ -172,40 +149,12 @@
     semver "^6.3.0"
     source-map "^0.5.0"
 
-<<<<<<< HEAD
-"@babel/generator@^7.12.10", "@babel/generator@^7.12.11", "@babel/generator@^7.17.3":
-  version "7.17.3"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.17.3.tgz#a2c30b0c4f89858cb87050c3ffdfd36bdf443200"
-  integrity sha512-+R6Dctil/MgUsZsZAkYgK+ADNSZzJRRy0TvY65T71z/CR854xHQ1EweBYXdfT+HNeN7w0cSJJEzgxZMv40pxsg==
-=======
-"@babel/core@^7.16.7":
-  version "7.17.5"
-  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.17.5.tgz#6cd2e836058c28f06a4ca8ee7ed955bbf37c8225"
-  integrity sha512-/BBMw4EvjmyquN5O+t5eh0+YqB3XXJkYD2cjKpYtWOfFy4lQ4UozNSmxAcWT8r2XtZs0ewG+zrfsqeR15i1ajA==
-  dependencies:
-    "@ampproject/remapping" "^2.1.0"
-    "@babel/code-frame" "^7.16.7"
-    "@babel/generator" "^7.17.3"
-    "@babel/helper-compilation-targets" "^7.16.7"
-    "@babel/helper-module-transforms" "^7.16.7"
-    "@babel/helpers" "^7.17.2"
-    "@babel/parser" "^7.17.3"
-    "@babel/template" "^7.16.7"
-    "@babel/traverse" "^7.17.3"
-    "@babel/types" "^7.17.0"
-    convert-source-map "^1.7.0"
-    debug "^4.1.0"
-    gensync "^1.0.0-beta.2"
-    json5 "^2.1.2"
-    semver "^6.3.0"
-
 "@babel/generator@^7.12.10", "@babel/generator@^7.12.11":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.12.11.tgz#98a7df7b8c358c9a37ab07a24056853016aba3af"
   integrity sha512-Ggg6WPOJtSi8yYQvLVjG8F/TlpWDlKx0OpS4Kt+xMQPs5OaGYWy+v1A+1TvxI6sAMGZpKWWoAQ1DaeQbImlItA==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   dependencies:
-    "@babel/types" "^7.17.0"
+    "@babel/types" "^7.12.11"
     jsesc "^2.5.1"
     source-map "^0.5.0"
 
@@ -227,8 +176,6 @@
     jsesc "^2.5.1"
     source-map "^0.5.0"
 
-<<<<<<< HEAD
-=======
 "@babel/generator@^7.17.3":
   version "7.17.3"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.17.3.tgz#a2c30b0c4f89858cb87050c3ffdfd36bdf443200"
@@ -238,14 +185,6 @@
     jsesc "^2.5.1"
     source-map "^0.5.0"
 
-"@babel/helper-annotate-as-pure@^7.10.4":
-  version "7.12.10"
-  resolved "https://registry.yarnpkg.com/@babel/helper-annotate-as-pure/-/helper-annotate-as-pure-7.12.10.tgz#54ab9b000e60a93644ce17b3f37d313aaf1d115d"
-  integrity sha512-XplmVbC1n+KY6jL8/fgLVXXUauDIB+lD5+GsQEh6F6GBF1dq1qy4DP4yXWzDKcoqXB3X58t61e85Fitoww4JVQ==
-  dependencies:
-    "@babel/types" "^7.12.10"
-
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 "@babel/helper-annotate-as-pure@^7.14.5", "@babel/helper-annotate-as-pure@^7.15.4":
   version "7.15.4"
   resolved "https://registry.yarnpkg.com/@babel/helper-annotate-as-pure/-/helper-annotate-as-pure-7.15.4.tgz#3d0e43b00c5e49fdb6c57e421601a7a658d5f835"
@@ -316,35 +255,16 @@
     browserslist "^4.16.6"
     semver "^6.3.0"
 
-<<<<<<< HEAD
-"@babel/helper-create-class-features-plugin@^7.12.1", "@babel/helper-create-class-features-plugin@^7.16.10", "@babel/helper-create-class-features-plugin@^7.16.7", "@babel/helper-create-class-features-plugin@^7.17.1", "@babel/helper-create-class-features-plugin@^7.17.6", "@babel/helper-create-class-features-plugin@^7.5.5":
-  version "7.17.6"
-  resolved "https://registry.yarnpkg.com/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.17.6.tgz#3778c1ed09a7f3e65e6d6e0f6fbfcc53809d92c9"
-  integrity sha512-SogLLSxXm2OkBbSsHZMM4tUi8fUzjs63AT/d0YQIzr6GSd8Hxsbk2KYDX0k0DweAzGMj/YWeiCsorIdtdcW8Eg==
-=======
-"@babel/helper-compilation-targets@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/helper-compilation-targets/-/helper-compilation-targets-7.16.7.tgz#06e66c5f299601e6c7da350049315e83209d551b"
-  integrity sha512-mGojBwIWcwGD6rfqgRXVlVYmPAv7eOpIemUG3dGnDdCY4Pae70ROij3XmfrH6Fa1h1aiDylpglbZyktfzyo/hA==
-  dependencies:
-    "@babel/compat-data" "^7.16.4"
-    "@babel/helper-validator-option" "^7.16.7"
-    browserslist "^4.17.5"
-    semver "^6.3.0"
-
 "@babel/helper-create-class-features-plugin@^7.12.1", "@babel/helper-create-class-features-plugin@^7.5.5", "@babel/helper-create-class-features-plugin@^7.8.3":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.12.1.tgz#3c45998f431edd4a9214c5f1d3ad1448a6137f6e"
   integrity sha512-hkL++rWeta/OVOBTRJc9a5Azh5mt5WgZUGAKMD8JM141YsE08K//bp1unBBieO6rUKkIPyUE0USQ30jAy3Sk1w==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   dependencies:
-    "@babel/helper-annotate-as-pure" "^7.16.7"
-    "@babel/helper-environment-visitor" "^7.16.7"
-    "@babel/helper-function-name" "^7.16.7"
-    "@babel/helper-member-expression-to-functions" "^7.16.7"
-    "@babel/helper-optimise-call-expression" "^7.16.7"
-    "@babel/helper-replace-supers" "^7.16.7"
-    "@babel/helper-split-export-declaration" "^7.16.7"
+    "@babel/helper-function-name" "^7.10.4"
+    "@babel/helper-member-expression-to-functions" "^7.12.1"
+    "@babel/helper-optimise-call-expression" "^7.10.4"
+    "@babel/helper-replace-supers" "^7.12.1"
+    "@babel/helper-split-export-declaration" "^7.10.4"
 
 "@babel/helper-create-class-features-plugin@^7.13.0":
   version "7.13.11"
@@ -369,16 +289,18 @@
     "@babel/helper-replace-supers" "^7.15.4"
     "@babel/helper-split-export-declaration" "^7.15.4"
 
-"@babel/helper-create-class-features-plugin@^7.8.3":
-  version "7.12.1"
-  resolved "https://registry.yarnpkg.com/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.12.1.tgz#3c45998f431edd4a9214c5f1d3ad1448a6137f6e"
-  integrity sha512-hkL++rWeta/OVOBTRJc9a5Azh5mt5WgZUGAKMD8JM141YsE08K//bp1unBBieO6rUKkIPyUE0USQ30jAy3Sk1w==
+"@babel/helper-create-class-features-plugin@^7.16.10", "@babel/helper-create-class-features-plugin@^7.16.7", "@babel/helper-create-class-features-plugin@^7.17.1", "@babel/helper-create-class-features-plugin@^7.17.6":
+  version "7.17.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.17.6.tgz#3778c1ed09a7f3e65e6d6e0f6fbfcc53809d92c9"
+  integrity sha512-SogLLSxXm2OkBbSsHZMM4tUi8fUzjs63AT/d0YQIzr6GSd8Hxsbk2KYDX0k0DweAzGMj/YWeiCsorIdtdcW8Eg==
   dependencies:
-    "@babel/helper-function-name" "^7.10.4"
-    "@babel/helper-member-expression-to-functions" "^7.12.1"
-    "@babel/helper-optimise-call-expression" "^7.10.4"
-    "@babel/helper-replace-supers" "^7.12.1"
-    "@babel/helper-split-export-declaration" "^7.10.4"
+    "@babel/helper-annotate-as-pure" "^7.16.7"
+    "@babel/helper-environment-visitor" "^7.16.7"
+    "@babel/helper-function-name" "^7.16.7"
+    "@babel/helper-member-expression-to-functions" "^7.16.7"
+    "@babel/helper-optimise-call-expression" "^7.16.7"
+    "@babel/helper-replace-supers" "^7.16.7"
+    "@babel/helper-split-export-declaration" "^7.16.7"
 
 "@babel/helper-create-regexp-features-plugin@^7.14.5":
   version "7.14.5"
@@ -424,24 +346,10 @@
     resolve "^1.14.2"
     semver "^6.1.2"
 
-<<<<<<< HEAD
 "@babel/helper-define-polyfill-provider@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@babel/helper-define-polyfill-provider/-/helper-define-polyfill-provider-0.3.1.tgz#52411b445bdb2e676869e5a74960d2d3826d2665"
   integrity sha512-J9hGMpJQmtWmj46B3kBHmL38UhJGhYX7eqkcq+2gsstyYt341HmPeWspihX43yVRA0mS+8GGk2Gckc7bY/HCmA==
-=======
-"@babel/helper-environment-visitor@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/helper-environment-visitor/-/helper-environment-visitor-7.16.7.tgz#ff484094a839bde9d89cd63cba017d7aae80ecd7"
-  integrity sha512-SLLb0AAn6PkUeAfKJCCOl9e1R53pQlGAfc4y4XuMRZfqeMYLE0dM1LMhqbGAlGQY0lfw5/ohoYWAe9V1yibRag==
-  dependencies:
-    "@babel/types" "^7.16.7"
-
-"@babel/helper-explode-assignable-expression@^7.10.4":
-  version "7.12.1"
-  resolved "https://registry.yarnpkg.com/@babel/helper-explode-assignable-expression/-/helper-explode-assignable-expression-7.12.1.tgz#8006a466695c4ad86a2a5f2fb15b5f2c31ad5633"
-  integrity sha512-dmUwH8XmlrUpVqgtZ737tK88v07l840z9j3OEhCLwKTkjlvKpfqXVIZ0wpK3aeOxspwGrf/5AP5qLx4rO3w5rA==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   dependencies:
     "@babel/helper-compilation-targets" "^7.13.0"
     "@babel/helper-module-imports" "^7.12.13"
@@ -473,7 +381,7 @@
   dependencies:
     "@babel/types" "^7.16.7"
 
-"@babel/helper-function-name@^7.10.4", "@babel/helper-function-name@^7.12.11", "@babel/helper-function-name@^7.16.7":
+"@babel/helper-function-name@^7.12.11", "@babel/helper-function-name@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.16.7.tgz#f1ec51551fb1c8956bc8dd95f38523b6cf375f8f"
   integrity sha512-QfDfEnIUyyBSR3HtrtGECuZ6DAyCkYFp7GHl75vFtTnn6pjKeK0T1DB5lLkFvBea8MdaiUABx3osbgLyInoejA==
@@ -500,25 +408,6 @@
     "@babel/template" "^7.15.4"
     "@babel/types" "^7.15.4"
 
-<<<<<<< HEAD
-=======
-"@babel/helper-function-name@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.16.7.tgz#f1ec51551fb1c8956bc8dd95f38523b6cf375f8f"
-  integrity sha512-QfDfEnIUyyBSR3HtrtGECuZ6DAyCkYFp7GHl75vFtTnn6pjKeK0T1DB5lLkFvBea8MdaiUABx3osbgLyInoejA==
-  dependencies:
-    "@babel/helper-get-function-arity" "^7.16.7"
-    "@babel/template" "^7.16.7"
-    "@babel/types" "^7.16.7"
-
-"@babel/helper-get-function-arity@^7.12.10":
-  version "7.12.10"
-  resolved "https://registry.yarnpkg.com/@babel/helper-get-function-arity/-/helper-get-function-arity-7.12.10.tgz#b158817a3165b5faa2047825dfa61970ddcc16cf"
-  integrity sha512-mm0n5BPjR06wh9mPQaDdXWDoll/j5UpCAPl1x8fS71GHm7HA6Ua2V4ylG1Ju8lvcTOietbPNNPaSilKj+pj+Ag==
-  dependencies:
-    "@babel/types" "^7.12.10"
-
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 "@babel/helper-get-function-arity@^7.12.13":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/helper-get-function-arity/-/helper-get-function-arity-7.12.13.tgz#bc63451d403a3b3082b97e1d8b3fe5bd4091e583"
@@ -537,16 +426,6 @@
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/helper-get-function-arity/-/helper-get-function-arity-7.16.7.tgz#ea08ac753117a669f1508ba06ebcc49156387419"
   integrity sha512-flc+RLSOBXzNzVhcLu6ujeHUrD6tANAOU5ojrRx/as+tbzf8+stUCj7+IfRRoAbEZqj/ahXEMsjhOhgeZsrnTw==
-<<<<<<< HEAD
-=======
-  dependencies:
-    "@babel/types" "^7.16.7"
-
-"@babel/helper-hoist-variables@^7.10.4":
-  version "7.10.4"
-  resolved "https://registry.yarnpkg.com/@babel/helper-hoist-variables/-/helper-hoist-variables-7.10.4.tgz#d49b001d1d5a68ca5e6604dda01a6297f7c9381e"
-  integrity sha512-wljroF5PgCk2juF69kanHVs6vrLwIPNp6DLD+Lrl3hoQ3PpPPikaDRNFA+0t81NOoMt2DL6WW/mdU8k4k6ZzuA==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   dependencies:
     "@babel/types" "^7.16.7"
 
@@ -561,23 +440,6 @@
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/helper-hoist-variables/-/helper-hoist-variables-7.16.7.tgz#86bcb19a77a509c7b77d0e22323ef588fa58c246"
   integrity sha512-m04d/0Op34H5v7pbZw6pSKP7weA6lsMvfiIAMeIvkY/R4xQtBSMFEigu9QTZ2qB/9l22vsxtM8a+Q8CzD255fg==
-<<<<<<< HEAD
-=======
-  dependencies:
-    "@babel/types" "^7.16.7"
-
-"@babel/helper-member-expression-to-functions@^7.12.1", "@babel/helper-member-expression-to-functions@^7.12.7":
-  version "7.12.7"
-  resolved "https://registry.yarnpkg.com/@babel/helper-member-expression-to-functions/-/helper-member-expression-to-functions-7.12.7.tgz#aa77bd0396ec8114e5e30787efa78599d874a855"
-  integrity sha512-DCsuPyeWxeHgh1Dus7APn7iza42i/qXqiFPWyBDdOFtvS581JQePsc1F/nD+fHrcswhLlRc2UpYS1NwERxZhHw==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
-  dependencies:
-    "@babel/types" "^7.16.7"
-
-"@babel/helper-member-expression-to-functions@^7.12.1", "@babel/helper-member-expression-to-functions@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/helper-member-expression-to-functions/-/helper-member-expression-to-functions-7.16.7.tgz#42b9ca4b2b200123c3b7e726b0ae5153924905b0"
-  integrity sha512-VtJ/65tYiU/6AbMTDwyoXGPKHgTsfRarivm+YbB5uAzKUyuPjgZSgAFeG87FCigc7KNHu2Pegh1XIT3lXjvz3Q==
   dependencies:
     "@babel/types" "^7.16.7"
 
@@ -594,6 +456,13 @@
   integrity sha512-cokOMkxC/BTyNP1AlY25HuBWM32iCEsLPI4BHDpJCHHm1FU2E7dKWWIXJgQgSFiu4lp8q3bL1BIKwqkSUviqtA==
   dependencies:
     "@babel/types" "^7.15.4"
+
+"@babel/helper-member-expression-to-functions@^7.16.7":
+  version "7.16.7"
+  resolved "https://registry.yarnpkg.com/@babel/helper-member-expression-to-functions/-/helper-member-expression-to-functions-7.16.7.tgz#42b9ca4b2b200123c3b7e726b0ae5153924905b0"
+  integrity sha512-VtJ/65tYiU/6AbMTDwyoXGPKHgTsfRarivm+YbB5uAzKUyuPjgZSgAFeG87FCigc7KNHu2Pegh1XIT3lXjvz3Q==
+  dependencies:
+    "@babel/types" "^7.16.7"
 
 "@babel/helper-module-imports@^7.0.0", "@babel/helper-module-imports@^7.8.3":
   version "7.12.5"
@@ -623,33 +492,20 @@
   dependencies:
     "@babel/types" "^7.15.4"
 
-<<<<<<< HEAD
-"@babel/helper-module-transforms@^7.12.1", "@babel/helper-module-transforms@^7.16.7":
-  version "7.17.6"
-  resolved "https://registry.yarnpkg.com/@babel/helper-module-transforms/-/helper-module-transforms-7.17.6.tgz#3c3b03cc6617e33d68ef5a27a67419ac5199ccd0"
-  integrity sha512-2ULmRdqoOMpdvkbT8jONrZML/XALfzxlb052bldftkicAUy8AxSCkD5trDPQcwHNmolcl7wP6ehNqMlyUw6AaA==
-=======
-"@babel/helper-module-imports@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.16.7.tgz#25612a8091a999704461c8a222d0efec5d091437"
-  integrity sha512-LVtS6TqjJHFc+nYeITRo6VLXve70xmq7wPhWTqDJusJEgGmkAACWwMiTNrvfoQo6hEhFwAIixNkvB0jPXDL8Wg==
-  dependencies:
-    "@babel/types" "^7.16.7"
-
 "@babel/helper-module-transforms@^7.12.1":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-transforms/-/helper-module-transforms-7.12.1.tgz#7954fec71f5b32c48e4b303b437c34453fd7247c"
   integrity sha512-QQzehgFAZ2bbISiCpmVGfiGux8YVFXQ0abBic2Envhej22DVXV9nCFaS5hIQbkyo1AdGb+gNME2TSh3hYJVV/w==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   dependencies:
-    "@babel/helper-environment-visitor" "^7.16.7"
-    "@babel/helper-module-imports" "^7.16.7"
-    "@babel/helper-simple-access" "^7.16.7"
-    "@babel/helper-split-export-declaration" "^7.16.7"
-    "@babel/helper-validator-identifier" "^7.16.7"
-    "@babel/template" "^7.16.7"
-    "@babel/traverse" "^7.17.3"
-    "@babel/types" "^7.17.0"
+    "@babel/helper-module-imports" "^7.12.1"
+    "@babel/helper-replace-supers" "^7.12.1"
+    "@babel/helper-simple-access" "^7.12.1"
+    "@babel/helper-split-export-declaration" "^7.11.0"
+    "@babel/helper-validator-identifier" "^7.10.4"
+    "@babel/template" "^7.10.4"
+    "@babel/traverse" "^7.12.1"
+    "@babel/types" "^7.12.1"
+    lodash "^4.17.19"
 
 "@babel/helper-module-transforms@^7.13.0":
   version "7.13.12"
@@ -679,12 +535,6 @@
     "@babel/traverse" "^7.15.4"
     "@babel/types" "^7.15.6"
 
-<<<<<<< HEAD
-"@babel/helper-optimise-call-expression@^7.10.4", "@babel/helper-optimise-call-expression@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/helper-optimise-call-expression/-/helper-optimise-call-expression-7.16.7.tgz#a34e3560605abbd31a18546bd2aad3e6d9a174f2"
-  integrity sha512-EtgBhg7rd/JcnpZFXpBy0ze1YRfdm7BnBX4uKMBd3ixa3RGAE002JZB66FJyNH7g0F38U05pXmA5P8cBh7z+1w==
-=======
 "@babel/helper-module-transforms@^7.16.7":
   version "7.17.6"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-transforms/-/helper-module-transforms-7.17.6.tgz#3c3b03cc6617e33d68ef5a27a67419ac5199ccd0"
@@ -699,14 +549,6 @@
     "@babel/traverse" "^7.17.3"
     "@babel/types" "^7.17.0"
 
-"@babel/helper-optimise-call-expression@^7.10.4", "@babel/helper-optimise-call-expression@^7.12.10":
-  version "7.12.10"
-  resolved "https://registry.yarnpkg.com/@babel/helper-optimise-call-expression/-/helper-optimise-call-expression-7.12.10.tgz#94ca4e306ee11a7dd6e9f42823e2ac6b49881e2d"
-  integrity sha512-4tpbU0SrSTjjt65UMWSrUOPZTsgvPgGG4S8QSTNHacKzpS51IVWGDj0yCwyeZND/i+LSN2g/O63jEXEWm49sYQ==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
-  dependencies:
-    "@babel/types" "^7.16.7"
-
 "@babel/helper-optimise-call-expression@^7.12.13":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/helper-optimise-call-expression/-/helper-optimise-call-expression-7.12.13.tgz#5c02d171b4c8615b1e7163f888c1c81c30a2aaea"
@@ -720,6 +562,13 @@
   integrity sha512-E/z9rfbAOt1vDW1DR7k4SzhzotVV5+qMciWV6LaG1g4jeFrkDlJedjtV4h0i4Q/ITnUu+Pk08M7fczsB9GXBDw==
   dependencies:
     "@babel/types" "^7.15.4"
+
+"@babel/helper-optimise-call-expression@^7.16.7":
+  version "7.16.7"
+  resolved "https://registry.yarnpkg.com/@babel/helper-optimise-call-expression/-/helper-optimise-call-expression-7.16.7.tgz#a34e3560605abbd31a18546bd2aad3e6d9a174f2"
+  integrity sha512-EtgBhg7rd/JcnpZFXpBy0ze1YRfdm7BnBX4uKMBd3ixa3RGAE002JZB66FJyNH7g0F38U05pXmA5P8cBh7z+1w==
+  dependencies:
+    "@babel/types" "^7.16.7"
 
 "@babel/helper-plugin-utils@7.10.4":
   version "7.10.4"
@@ -736,23 +585,6 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.13.0.tgz#806526ce125aed03373bc416a828321e3a6a33af"
   integrity sha512-ZPafIPSwzUlAoWT8DKs1W2VyF2gOWthGd5NGFMsBcMMol+ZhK+EQY/e6V96poa6PA/Bh+C9plWN0hXO1uB8AfQ==
 
-<<<<<<< HEAD
-=======
-"@babel/helper-plugin-utils@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.16.7.tgz#aa3a8ab4c3cceff8e65eb9e73d87dc4ff320b2f5"
-  integrity sha512-Qg3Nk7ZxpgMrsox6HreY1ZNKdBq7K72tDSliA6dCl5f007jR4ne8iD5UzuNnCJH2xBf2BEEVGr+/OL6Gdp7RxA==
-
-"@babel/helper-remap-async-to-generator@^7.12.1":
-  version "7.12.1"
-  resolved "https://registry.yarnpkg.com/@babel/helper-remap-async-to-generator/-/helper-remap-async-to-generator-7.12.1.tgz#8c4dbbf916314f6047dc05e6a2217074238347fd"
-  integrity sha512-9d0KQCRM8clMPcDwo8SevNs+/9a8yWVVmaE80FGJcEP8N1qToREmWEGnBn8BUlJhYRFz6fqxeRL1sl5Ogsed7A==
-  dependencies:
-    "@babel/helper-annotate-as-pure" "^7.10.4"
-    "@babel/helper-wrap-function" "^7.10.4"
-    "@babel/types" "^7.12.1"
-
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 "@babel/helper-remap-async-to-generator@^7.14.5", "@babel/helper-remap-async-to-generator@^7.15.4":
   version "7.15.4"
   resolved "https://registry.yarnpkg.com/@babel/helper-remap-async-to-generator/-/helper-remap-async-to-generator-7.15.4.tgz#2637c0731e4c90fbf58ac58b50b2b5a192fc970f"
@@ -770,17 +602,6 @@
     "@babel/helper-annotate-as-pure" "^7.16.7"
     "@babel/helper-wrap-function" "^7.16.8"
     "@babel/types" "^7.16.8"
-
-"@babel/helper-replace-supers@^7.12.1", "@babel/helper-replace-supers@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/helper-replace-supers/-/helper-replace-supers-7.16.7.tgz#e9f5f5f32ac90429c1a4bdec0f231ef0c2838ab1"
-  integrity sha512-y9vsWilTNaVnVh6xiJfABzsNpgDPKev9HnAgz6Gb1p6UUwf9NepdlsV7VXGCftJM+jqD5f7JIEubcpLjZj5dBw==
-  dependencies:
-    "@babel/helper-environment-visitor" "^7.16.7"
-    "@babel/helper-member-expression-to-functions" "^7.16.7"
-    "@babel/helper-optimise-call-expression" "^7.16.7"
-    "@babel/traverse" "^7.16.7"
-    "@babel/types" "^7.16.7"
 
 "@babel/helper-replace-supers@^7.13.0", "@babel/helper-replace-supers@^7.13.12":
   version "7.13.12"
@@ -802,6 +623,17 @@
     "@babel/traverse" "^7.15.4"
     "@babel/types" "^7.15.4"
 
+"@babel/helper-replace-supers@^7.16.7":
+  version "7.16.7"
+  resolved "https://registry.yarnpkg.com/@babel/helper-replace-supers/-/helper-replace-supers-7.16.7.tgz#e9f5f5f32ac90429c1a4bdec0f231ef0c2838ab1"
+  integrity sha512-y9vsWilTNaVnVh6xiJfABzsNpgDPKev9HnAgz6Gb1p6UUwf9NepdlsV7VXGCftJM+jqD5f7JIEubcpLjZj5dBw==
+  dependencies:
+    "@babel/helper-environment-visitor" "^7.16.7"
+    "@babel/helper-member-expression-to-functions" "^7.16.7"
+    "@babel/helper-optimise-call-expression" "^7.16.7"
+    "@babel/traverse" "^7.16.7"
+    "@babel/types" "^7.16.7"
+
 "@babel/helper-simple-access@^7.13.12":
   version "7.13.12"
   resolved "https://registry.yarnpkg.com/@babel/helper-simple-access/-/helper-simple-access-7.13.12.tgz#dd6c538afb61819d205a012c31792a39c7a5eaf6"
@@ -820,16 +652,6 @@
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/helper-simple-access/-/helper-simple-access-7.16.7.tgz#d656654b9ea08dbb9659b69d61063ccd343ff0f7"
   integrity sha512-ZIzHVyoeLMvXMN/vok/a4LWRy8G2v205mNP0XOuf9XRLyX5/u9CnVulUtDgUTama3lT+bf/UqucuZjqiGuTS1g==
-<<<<<<< HEAD
-=======
-  dependencies:
-    "@babel/types" "^7.16.7"
-
-"@babel/helper-skip-transparent-expression-wrappers@^7.12.1":
-  version "7.12.1"
-  resolved "https://registry.yarnpkg.com/@babel/helper-skip-transparent-expression-wrappers/-/helper-skip-transparent-expression-wrappers-7.12.1.tgz#462dc63a7e435ade8468385c63d2b84cce4b3cbf"
-  integrity sha512-Mf5AUuhG1/OCChOJ/HcADmvcHM42WJockombn8ATJG3OnyiSxBK/Mm5x78BQWvmtXZKHgbjdGL2kin/HOLlZGA==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   dependencies:
     "@babel/types" "^7.16.7"
 
@@ -847,7 +669,7 @@
   dependencies:
     "@babel/types" "^7.15.4"
 
-"@babel/helper-split-export-declaration@^7.10.4", "@babel/helper-split-export-declaration@^7.12.11", "@babel/helper-split-export-declaration@^7.16.7":
+"@babel/helper-split-export-declaration@^7.12.11", "@babel/helper-split-export-declaration@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.16.7.tgz#0b648c0c42da9d3920d85ad585f2778620b8726b"
   integrity sha512-xbWoy/PFoxSWazIToT9Sif+jJTlrMcndIsaOKvTA6u7QEo7ilkRZpjew18/W3c7nm8fXdUDXh02VXTbZ0pGDNw==
@@ -868,43 +690,21 @@
   dependencies:
     "@babel/types" "^7.15.4"
 
-<<<<<<< HEAD
-"@babel/helper-validator-identifier@^7.12.11", "@babel/helper-validator-identifier@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.16.7.tgz#e8c602438c4a8195751243da9031d1607d247cad"
-  integrity sha512-hsEnFemeiW4D08A5gUAZxLBTXpZ39P+a+DGDsHw1yxqyQ/jzFEnxf5uTEGp+3bzAbNOxU1paTgYS4ECU/IgfDw==
-=======
-"@babel/helper-split-export-declaration@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.16.7.tgz#0b648c0c42da9d3920d85ad585f2778620b8726b"
-  integrity sha512-xbWoy/PFoxSWazIToT9Sif+jJTlrMcndIsaOKvTA6u7QEo7ilkRZpjew18/W3c7nm8fXdUDXh02VXTbZ0pGDNw==
-  dependencies:
-    "@babel/types" "^7.16.7"
-
-"@babel/helper-validator-identifier@^7.10.4", "@babel/helper-validator-identifier@^7.12.11":
+"@babel/helper-validator-identifier@^7.12.11":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.12.11.tgz#c9a1f021917dcb5ccf0d4e453e399022981fc9ed"
   integrity sha512-np/lG3uARFybkoHokJUmf1QfEvRVCPbmQeUQpKow5cQ3xWrV9i3rUHodKDJPQfTVX61qKi+UdYk8kik84n7XOw==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 
 "@babel/helper-validator-identifier@^7.14.5", "@babel/helper-validator-identifier@^7.14.9", "@babel/helper-validator-identifier@^7.15.7":
   version "7.15.7"
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.15.7.tgz#220df993bfe904a4a6b02ab4f3385a5ebf6e2389"
   integrity sha512-K4JvCtQqad9OY2+yTU8w+E82ywk/fe+ELNlt1G8z3bVGlZfn/hOcQQsUhGhW/N+tb3fxK800wLtKOE/aM0m72w==
 
-<<<<<<< HEAD
-=======
 "@babel/helper-validator-identifier@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.16.7.tgz#e8c602438c4a8195751243da9031d1607d247cad"
   integrity sha512-hsEnFemeiW4D08A5gUAZxLBTXpZ39P+a+DGDsHw1yxqyQ/jzFEnxf5uTEGp+3bzAbNOxU1paTgYS4ECU/IgfDw==
 
-"@babel/helper-validator-option@^7.12.1", "@babel/helper-validator-option@^7.12.11":
-  version "7.12.11"
-  resolved "https://registry.yarnpkg.com/@babel/helper-validator-option/-/helper-validator-option-7.12.11.tgz#d66cb8b7a3e7fe4c6962b32020a131ecf0847f4f"
-  integrity sha512-TBFCyj939mFSdeX7U7DDj32WtzYY7fDcalgq8v3fBZMNOJQNn7nOYzMaUCiPxPYfCup69mtIpqlKgMZLvQ8Xhw==
-
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 "@babel/helper-validator-option@^7.12.17":
   version "7.12.17"
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-option/-/helper-validator-option-7.12.17.tgz#d1fbf012e1a79b7eebbfdc6d270baaf8d9eb9831"
@@ -919,19 +719,6 @@
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-option/-/helper-validator-option-7.16.7.tgz#b203ce62ce5fe153899b617c08957de860de4d23"
   integrity sha512-TRtenOuRUVo9oIQGPC5G9DgK4743cdxvtOw0weQNpZXaS16SCBi5MNjZF8vba3ETURjZpTbVn7Vvcf2eAwFozQ==
-<<<<<<< HEAD
-=======
-
-"@babel/helper-wrap-function@^7.10.4":
-  version "7.12.3"
-  resolved "https://registry.yarnpkg.com/@babel/helper-wrap-function/-/helper-wrap-function-7.12.3.tgz#3332339fc4d1fbbf1c27d7958c27d34708e990d9"
-  integrity sha512-Cvb8IuJDln3rs6tzjW3Y8UeelAOdnpB8xtQ4sme2MSZ9wOxrbThporC0y/EtE16VAtoyEfLM404Xr1e0OOp+ow==
-  dependencies:
-    "@babel/helper-function-name" "^7.10.4"
-    "@babel/template" "^7.10.4"
-    "@babel/traverse" "^7.10.4"
-    "@babel/types" "^7.10.4"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 
 "@babel/helper-wrap-function@^7.15.4":
   version "7.15.4"
@@ -971,28 +758,12 @@
     "@babel/traverse" "^7.15.4"
     "@babel/types" "^7.15.4"
 
-<<<<<<< HEAD
-"@babel/highlight@^7.10.4", "@babel/highlight@^7.16.7":
-  version "7.16.10"
-  resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.16.10.tgz#744f2eb81579d6eea753c227b0f570ad785aba88"
-  integrity sha512-5FnTQLSLswEj6IkgVw5KusNUUFY9ZGqe/TRFnP/BKYHYgfh7tc+C7mwiy95/yNP7Dh9x580Vv8r7u7ZfTBFxdw==
-=======
-"@babel/helpers@^7.17.2":
-  version "7.17.2"
-  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.17.2.tgz#23f0a0746c8e287773ccd27c14be428891f63417"
-  integrity sha512-0Qu7RLR1dILozr/6M0xgj+DFPmi6Bnulgm9M8BVa9ZCWxDqlSnqt3cf8IDPB5m45sVXUZ0kuQAgUrdSFFH79fQ==
-  dependencies:
-    "@babel/template" "^7.16.7"
-    "@babel/traverse" "^7.17.0"
-    "@babel/types" "^7.17.0"
-
 "@babel/highlight@^7.10.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.10.4.tgz#7d1bdfd65753538fabe6c38596cdb76d9ac60143"
   integrity sha512-i6rgnR/YgPEQzZZnbTHHuZdlE8qyoBNalD6F+q4vAFlcMEcqmkoG+mPqJYJCo63qPf74+Y1UZsl3l6f7/RIkmA==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   dependencies:
-    "@babel/helper-validator-identifier" "^7.16.7"
+    "@babel/helper-validator-identifier" "^7.10.4"
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
@@ -1014,12 +785,6 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-<<<<<<< HEAD
-"@babel/parser@^7.12.10", "@babel/parser@^7.12.11", "@babel/parser@^7.12.7", "@babel/parser@^7.16.7", "@babel/parser@^7.17.3":
-  version "7.17.3"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.17.3.tgz#b07702b982990bf6fdc1da5049a23fece4c5c3d0"
-  integrity sha512-7yJPvPV+ESz2IUTPbOL+YkIGyCqOyNIzdguKQuJGnH7bg1WTIifuM21YqokFt/THWh1AkCRn9IgoykTRCBVpzA==
-=======
 "@babel/highlight@^7.16.7":
   version "7.16.10"
   resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.16.10.tgz#744f2eb81579d6eea753c227b0f570ad785aba88"
@@ -1033,36 +798,28 @@
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.12.11.tgz#9ce3595bcd74bc5c466905e86c535b8b25011e79"
   integrity sha512-N3UxG+uuF4CMYoNj8AhnbAcJF0PiuJ9KHuy1lQmkYsxTer/MAH9UBNHsBoAX/4s6NvlDD047No8mYVGGzLL4hg==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 
 "@babel/parser@^7.12.13", "@babel/parser@^7.13.0":
   version "7.13.12"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.13.12.tgz#ba320059420774394d3b0c0233ba40e4250b81d1"
   integrity sha512-4T7Pb244rxH24yR116LAuJ+adxXXnHhZaLJjegJVKSdoNCe4x1eDBaud5YIcQFcqzsaD5BHvJw5BQ0AZapdCRw==
 
-"@babel/parser@^7.12.3", "@babel/parser@^7.4.5", "@babel/parser@^7.7.0":
-  version "7.12.11"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.12.11.tgz#9ce3595bcd74bc5c466905e86c535b8b25011e79"
-  integrity sha512-N3UxG+uuF4CMYoNj8AhnbAcJF0PiuJ9KHuy1lQmkYsxTer/MAH9UBNHsBoAX/4s6NvlDD047No8mYVGGzLL4hg==
-
 "@babel/parser@^7.15.4", "@babel/parser@^7.15.5":
   version "7.15.7"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.15.7.tgz#0c3ed4a2eb07b165dfa85b3cc45c727334c4edae"
   integrity sha512-rycZXvQ+xS9QyIcJ9HXeDWf1uxqlbVFAUq0Rq0dbc50Zb/+wUe/ehyfzGfm9KZZF0kBejYgxltBXocP+gKdL2g==
 
-<<<<<<< HEAD
+"@babel/parser@^7.16.7", "@babel/parser@^7.17.3":
+  version "7.17.3"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.17.3.tgz#b07702b982990bf6fdc1da5049a23fece4c5c3d0"
+  integrity sha512-7yJPvPV+ESz2IUTPbOL+YkIGyCqOyNIzdguKQuJGnH7bg1WTIifuM21YqokFt/THWh1AkCRn9IgoykTRCBVpzA==
+
 "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression/-/plugin-bugfix-safari-id-destructuring-collision-in-function-expression-7.16.7.tgz#4eda6d6c2a0aa79c70fa7b6da67763dfe2141050"
   integrity sha512-anv/DObl7waiGEnC24O9zqL0pSuI9hljihqiDuFHC8d7/bjr/4RLGPWuc8rYOff/QPzbEPSkzG8wGG9aDuhHRg==
   dependencies:
     "@babel/helper-plugin-utils" "^7.16.7"
-=======
-"@babel/parser@^7.16.7", "@babel/parser@^7.17.3":
-  version "7.17.3"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.17.3.tgz#b07702b982990bf6fdc1da5049a23fece4c5c3d0"
-  integrity sha512-7yJPvPV+ESz2IUTPbOL+YkIGyCqOyNIzdguKQuJGnH7bg1WTIifuM21YqokFt/THWh1AkCRn9IgoykTRCBVpzA==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 
 "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@^7.15.4":
   version "7.15.4"
@@ -1815,20 +1572,13 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.16.7"
 
-<<<<<<< HEAD
-"@babel/plugin-transform-modules-amd@^7.12.1", "@babel/plugin-transform-modules-amd@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-modules-amd/-/plugin-transform-modules-amd-7.16.7.tgz#b28d323016a7daaae8609781d1f8c9da42b13186"
-  integrity sha512-KaaEtgBL7FKYwjJ/teH63oAmE3lP34N3kshz8mm4VMAw7U3PxjVwwUmxEFksbgsNUaO3wId9R2AVQYSEGRa2+g==
-=======
-"@babel/plugin-transform-modules-amd@^7.10.5", "@babel/plugin-transform-modules-amd@^7.12.1", "@babel/plugin-transform-modules-amd@^7.5.0":
+"@babel/plugin-transform-modules-amd@^7.12.1":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-modules-amd/-/plugin-transform-modules-amd-7.12.1.tgz#3154300b026185666eebb0c0ed7f8415fefcf6f9"
   integrity sha512-tDW8hMkzad5oDtzsB70HIQQRBiTKrhfgwC/KkJeGsaNFTdWhKNt/BiE8c5yj19XiGyrxpbkOfH87qkNg1YGlOQ==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   dependencies:
-    "@babel/helper-module-transforms" "^7.16.7"
-    "@babel/helper-plugin-utils" "^7.16.7"
+    "@babel/helper-module-transforms" "^7.12.1"
+    "@babel/helper-plugin-utils" "^7.10.4"
     babel-plugin-dynamic-import-node "^2.3.3"
 
 "@babel/plugin-transform-modules-amd@^7.13.0":
@@ -1849,8 +1599,6 @@
     "@babel/helper-plugin-utils" "^7.14.5"
     babel-plugin-dynamic-import-node "^2.3.3"
 
-<<<<<<< HEAD
-=======
 "@babel/plugin-transform-modules-amd@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-modules-amd/-/plugin-transform-modules-amd-7.16.7.tgz#b28d323016a7daaae8609781d1f8c9da42b13186"
@@ -1860,17 +1608,6 @@
     "@babel/helper-plugin-utils" "^7.16.7"
     babel-plugin-dynamic-import-node "^2.3.3"
 
-"@babel/plugin-transform-modules-commonjs@^7.12.1":
-  version "7.12.1"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-modules-commonjs/-/plugin-transform-modules-commonjs-7.12.1.tgz#fa403124542636c786cf9b460a0ffbb48a86e648"
-  integrity sha512-dY789wq6l0uLY8py9c1B48V8mVL5gZh/+PQ5ZPrylPYsnAvnEMjqsUXkuoDVPeVK+0VyGar+D08107LzDQ6pag==
-  dependencies:
-    "@babel/helper-module-transforms" "^7.12.1"
-    "@babel/helper-plugin-utils" "^7.10.4"
-    "@babel/helper-simple-access" "^7.12.1"
-    babel-plugin-dynamic-import-node "^2.3.3"
-
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 "@babel/plugin-transform-modules-commonjs@^7.15.4":
   version "7.15.4"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-modules-commonjs/-/plugin-transform-modules-commonjs-7.15.4.tgz#8201101240eabb5a76c08ef61b2954f767b6b4c1"
@@ -2519,31 +2256,7 @@
     "@babel/parser" "^7.15.4"
     "@babel/types" "^7.15.4"
 
-<<<<<<< HEAD
-"@babel/traverse@^7.12.1", "@babel/traverse@^7.12.10", "@babel/traverse@^7.16.7", "@babel/traverse@^7.16.8", "@babel/traverse@^7.17.0", "@babel/traverse@^7.17.3":
-  version "7.17.3"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.17.3.tgz#0ae0f15b27d9a92ba1f2263358ea7c4e7db47b57"
-  integrity sha512-5irClVky7TxRWIRtxlh2WPUUOLhcPN06AGgaQSB8AEwuyEBgJVuJ5imdHm5zxk8w0QS5T+tDfnDxAlhWjpb7cw==
-  dependencies:
-    "@babel/code-frame" "^7.16.7"
-    "@babel/generator" "^7.17.3"
-    "@babel/helper-environment-visitor" "^7.16.7"
-    "@babel/helper-function-name" "^7.16.7"
-    "@babel/helper-hoist-variables" "^7.16.7"
-    "@babel/helper-split-export-declaration" "^7.16.7"
-    "@babel/parser" "^7.17.3"
-    "@babel/types" "^7.17.0"
-=======
-"@babel/template@^7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.16.7.tgz#8d126c8701fde4d66b264b3eba3d96f07666d155"
-  integrity sha512-I8j/x8kHUrbYRTUxXrrMbfCa7jxkE7tZre39x3kjr9hvI82cK1FfqLygotcWN5kdPGWcLdWMHpSBavse5tWw3w==
-  dependencies:
-    "@babel/code-frame" "^7.16.7"
-    "@babel/parser" "^7.16.7"
-    "@babel/types" "^7.16.7"
-
-"@babel/traverse@^7.1.6", "@babel/traverse@^7.10.4", "@babel/traverse@^7.12.1", "@babel/traverse@^7.12.10", "@babel/traverse@^7.12.5", "@babel/traverse@^7.4.5", "@babel/traverse@^7.7.0":
+"@babel/traverse@^7.12.1", "@babel/traverse@^7.12.10", "@babel/traverse@^7.4.5", "@babel/traverse@^7.7.0", "@babel/types@^7.7.0", "@babel/types@^7.7.2":
   version "7.12.12"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.12.12.tgz#d0cd87892704edd8da002d674bc811ce64743376"
   integrity sha512-s88i0X0lPy45RrLM8b9mz8RPH5FqO9G9p7ti59cToE44xFm1Q+Pjh5Gq4SXBbtb88X7Uy7pexeqRIQDDMNkL0w==
@@ -2554,9 +2267,9 @@
     "@babel/helper-split-export-declaration" "^7.12.11"
     "@babel/parser" "^7.12.11"
     "@babel/types" "^7.12.12"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     debug "^4.1.0"
     globals "^11.1.0"
+    lodash "^4.17.19"
 
 "@babel/traverse@^7.12.11", "@babel/traverse@^7.12.9", "@babel/traverse@^7.15.4":
   version "7.15.4"
@@ -2588,10 +2301,7 @@
     globals "^11.1.0"
     lodash "^4.17.19"
 
-<<<<<<< HEAD
-"@babel/traverse@^7.4.5", "@babel/traverse@^7.7.0":
-=======
-"@babel/traverse@^7.17.0", "@babel/traverse@^7.17.3":
+"@babel/traverse@^7.16.7", "@babel/traverse@^7.16.8", "@babel/traverse@^7.17.0", "@babel/traverse@^7.17.3":
   version "7.17.3"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.17.3.tgz#0ae0f15b27d9a92ba1f2263358ea7c4e7db47b57"
   integrity sha512-5irClVky7TxRWIRtxlh2WPUUOLhcPN06AGgaQSB8AEwuyEBgJVuJ5imdHm5zxk8w0QS5T+tDfnDxAlhWjpb7cw==
@@ -2606,22 +2316,6 @@
     "@babel/types" "^7.17.0"
     debug "^4.1.0"
     globals "^11.1.0"
-
-"@babel/types@^7.1.6", "@babel/types@^7.10.4", "@babel/types@^7.10.5", "@babel/types@^7.12.1", "@babel/types@^7.12.10", "@babel/types@^7.12.11", "@babel/types@^7.12.12", "@babel/types@^7.12.5", "@babel/types@^7.12.7", "@babel/types@^7.4.0", "@babel/types@^7.4.4", "@babel/types@^7.7.0", "@babel/types@^7.7.2":
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
-  version "7.12.12"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.12.12.tgz#d0cd87892704edd8da002d674bc811ce64743376"
-  integrity sha512-s88i0X0lPy45RrLM8b9mz8RPH5FqO9G9p7ti59cToE44xFm1Q+Pjh5Gq4SXBbtb88X7Uy7pexeqRIQDDMNkL0w==
-  dependencies:
-    "@babel/code-frame" "^7.12.11"
-    "@babel/generator" "^7.12.11"
-    "@babel/helper-function-name" "^7.12.11"
-    "@babel/helper-split-export-declaration" "^7.12.11"
-    "@babel/parser" "^7.12.11"
-    "@babel/types" "^7.12.12"
-    debug "^4.1.0"
-    globals "^11.1.0"
-    lodash "^4.17.19"
 
 "@babel/types@^7.12.1", "@babel/types@^7.12.10", "@babel/types@^7.12.11", "@babel/types@^7.12.12", "@babel/types@^7.12.5", "@babel/types@^7.12.7", "@babel/types@^7.16.0", "@babel/types@^7.16.7", "@babel/types@^7.16.8", "@babel/types@^7.17.0", "@babel/types@^7.4.4":
   version "7.17.0"
@@ -2646,24 +2340,6 @@
   integrity sha512-BPU+7QhqNjmWyDO0/vitH/CuhpV8ZmK1wpKva8nuyNF5MJfuRNWMc+hc14+u9xT93kvykMdncrJT19h74uB1Ig==
   dependencies:
     "@babel/helper-validator-identifier" "^7.14.9"
-    to-fast-properties "^2.0.0"
-
-<<<<<<< HEAD
-"@babel/types@^7.7.0", "@babel/types@^7.7.2":
-  version "7.12.12"
-  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.12.12.tgz#4608a6ec313abbd87afa55004d373ad04a96c299"
-  integrity sha512-lnIX7piTxOH22xE7fDXDbSHg9MM1/6ORnafpJmov5rs0kX5g4BZxeXNJLXsMRiO0U5Rb8/FvMS6xlTnTHvxonQ==
-  dependencies:
-    "@babel/helper-validator-identifier" "^7.12.11"
-    lodash "^4.17.19"
-=======
-"@babel/types@^7.16.7", "@babel/types@^7.17.0":
-  version "7.17.0"
-  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.17.0.tgz#a826e368bccb6b3d84acd76acad5c0d87342390b"
-  integrity sha512-TmKSNO4D5rzhL5bjWFcVHHLETzfQ/AmbKpKPOSjlP0WoHZ6L911fgoOKY4Alp/emzG4cHJdyN49zpgkbXFEHHw==
-  dependencies:
-    "@babel/helper-validator-identifier" "^7.16.7"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     to-fast-properties "^2.0.0"
 
 "@cnakazawa/watch@^1.0.3":
@@ -3743,7 +3419,6 @@
   resolved "https://registry.yarnpkg.com/@simple-dom/interface/-/interface-1.4.0.tgz#e8feea579232017f89b0138e2726facda6fbb71f"
   integrity sha512-l5qumKFWU0S+4ZzMaLXFU8tQZsicHEMEyAxI5kDFGhJsRqDwe0a7/iPA/GdxlGyDKseQQAgIz5kzU7eXTrlSpA==
 
-<<<<<<< HEAD
 "@sinonjs/commons@^1.6.0", "@sinonjs/commons@^1.8.1":
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.3.tgz#3802ddd21a50a949b6721ddd72da36e67e7f1b2d"
@@ -3752,9 +3427,6 @@
     type-detect "4.0.8"
 
 "@sinonjs/commons@^1.7.0":
-=======
-"@sinonjs/commons@^1", "@sinonjs/commons@^1.3.0", "@sinonjs/commons@^1.4.0", "@sinonjs/commons@^1.7.0":
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.2.tgz#858f5c4b48d80778fde4b9d541f27edc0d56488b"
   integrity sha512-sruwd86RJHdsVf/AtBoijDmUqJp3B6hF/DGC23C+JaegnDHaZyewCjoVGTdg3J0uz3Zs7NnIT05OBOmML72lQw==
@@ -5103,14 +4775,6 @@ accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
     mime-types "~2.1.24"
     negotiator "0.6.2"
 
-accepts@~1.3.8:
-  version "1.3.8"
-  resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.8.tgz#0bf0be125b67014adcb0b0921e62db7bffe16b2e"
-  integrity sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==
-  dependencies:
-    mime-types "~2.1.34"
-    negotiator "0.6.3"
-
 acorn-dynamic-import@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/acorn-dynamic-import/-/acorn-dynamic-import-3.0.0.tgz#901ceee4c7faaef7e07ad2a47e890675da50a278"
@@ -5398,7 +5062,7 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-anymatch@^3.0.0, anymatch@^3.1.1, anymatch@~3.1.1, anymatch@~3.1.2:
+anymatch@^3.0.0, anymatch@~3.1.1, anymatch@~3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-3.1.2.tgz#c0557c096af32f106198f4f4e2a383537e378716"
   integrity sha512-P43ePfOAIupkguHUycrc4qJ9kz8ZiuOUijaETwX7THt0Y/GNK7v0aa8rY816xWjZ7rJdA5XdMcpVFTKMq+RvWg==
@@ -6656,22 +6320,6 @@ body-parser@1.19.0, body-parser@^1.19.0:
     raw-body "2.4.0"
     type-is "~1.6.17"
 
-body-parser@1.19.2:
-  version "1.19.2"
-  resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.19.2.tgz#4714ccd9c157d44797b8b5607d72c0b89952f26e"
-  integrity sha512-SAAwOxgoCKMGs9uUAUFHygfLAyaniaoun6I8mFY9pRAJL9+Kec34aU+oIjDhTycub1jozEfEwx1W1IuOYxVSFw==
-  dependencies:
-    bytes "3.1.2"
-    content-type "~1.0.4"
-    debug "2.6.9"
-    depd "~1.1.2"
-    http-errors "1.8.1"
-    iconv-lite "0.4.24"
-    on-finished "~2.3.0"
-    qs "6.9.7"
-    raw-body "2.4.3"
-    type-is "~1.6.18"
-
 body@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/body/-/body-5.1.0.tgz#e4ba0ce410a46936323367609ecb4e6553125069"
@@ -6799,11 +6447,7 @@ broccoli-babel-transpiler@^6.5.0:
     rsvp "^4.8.2"
     workerpool "^2.3.0"
 
-<<<<<<< HEAD
 broccoli-babel-transpiler@^7.8.0:
-=======
-broccoli-babel-transpiler@^7.3.0, broccoli-babel-transpiler@^7.8.0:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "7.8.0"
   resolved "https://registry.yarnpkg.com/broccoli-babel-transpiler/-/broccoli-babel-transpiler-7.8.0.tgz#7e0f01fce5739f49bbadeee7f1e625ca51cad66e"
   integrity sha512-dv30Td5uL7dO3NzQUqQKQs+Iq7JGKnCNtvc6GBO76uVPqGnRlsQZcYqdBVr33JrctR+ZrpTUf7TjsFKeDRFA8Q==
@@ -7420,11 +7064,7 @@ broccoli-terser-sourcemap@^4.1.0:
     walk-sync "^2.2.0"
     workerpool "^6.0.0"
 
-<<<<<<< HEAD
 broccoli@^3.5.1:
-=======
-broccoli@^3.5.2:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/broccoli/-/broccoli-3.5.2.tgz#60921167d57b43fb5bad527420d62fe532595ef4"
   integrity sha512-sWi3b3fTUSVPDsz5KsQ5eCQNVAtLgkIE/HYFkEZXR/07clqmd4E/gFiuwSaqa9b+QTXc1Uemfb7TVWbEIURWDg==
@@ -7554,7 +7194,7 @@ browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.16.3:
     escalade "^3.1.1"
     node-releases "^1.1.70"
 
-browserslist@^4.14.5, browserslist@^4.17.5, browserslist@^4.19.1:
+browserslist@^4.14.5, browserslist@^4.19.1:
   version "4.19.3"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.19.3.tgz#29b7caad327ecf2859485f696f9604214bedd383"
   integrity sha512-XK3X4xtKJ+Txj8G5c30B4gsm71s69lqXlkYui4s6EkKxuv49qjYlY6oVd+IFJ73d4YymtM3+djvvt/R/iJwwDg==
@@ -7655,11 +7295,6 @@ bytes@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.0.tgz#f6cf7933a360e0588fa9fde85651cdc7f805d1f6"
   integrity sha512-zauLjrfCG+xvoyaqLoV8bLVXXNGC4JqlxFCutSDWA6fJrTo2ZuvLYTqZ7aHBLZSMOopbzwv8f+wZcVzfVTI2Dg==
-
-bytes@3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.2.tgz#8b0beeb98605adf1b128fa4386403c009e0221a5"
-  integrity sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==
 
 cacache@^12.0.2:
   version "12.0.4"
@@ -7803,17 +7438,15 @@ caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001264:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001265.tgz#0613c9e6c922e422792e6fcefdf9a3afeee4f8c3"
   integrity sha512-YzBnspggWV5hep1m9Z6sZVLOt7vrju8xWooFAgN6BA5qvy98qPAPb7vNUzypFaoh2pb3vlfzbDO8tB57UPGbtw==
 
-<<<<<<< HEAD
 caniuse-lite@^1.0.30001181, caniuse-lite@^1.0.30001312:
   version "1.0.30001312"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001312.tgz#e11eba4b87e24d22697dae05455d5aea28550d5f"
   integrity sha512-Wiz1Psk2MEK0pX3rUzWaunLTZzqS2JYZFzNKqAiJGiuxIjRPLgV6+VDPOg6lQOUxmDwhTlh198JsTTi8Hzw6aQ==
-=======
+
 caniuse-lite@^1.0.30001313:
   version "1.0.30001314"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001314.tgz#65c7f9fb7e4594fca0a333bec1d8939662377596"
   integrity sha512-0zaSO+TnCHtHJIbpLroX7nsD+vYuOVjl3uzFbJO1wMVbuveJA0RK2WcQA9ZUIOiO0/ArMiMgHJLxfEZhQiC0kw==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -8442,11 +8075,7 @@ content-disposition@0.5.3:
   dependencies:
     safe-buffer "5.1.2"
 
-<<<<<<< HEAD
 content-disposition@^0.5.4:
-=======
-content-disposition@0.5.4:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/content-disposition/-/content-disposition-0.5.4.tgz#8b82b4efac82512a02bb0b1dcec9d2c5e8eb5bfe"
   integrity sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==
@@ -8486,11 +8115,6 @@ cookie@0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
   integrity sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==
-
-cookie@0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.2.tgz#0e41f24de5ecf317947c82fc789e06a884824432"
-  integrity sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==
 
 cookie@~0.4.1:
   version "0.4.1"
@@ -9392,22 +9016,10 @@ detect-port@^1.3.0:
     address "^1.0.1"
     debug "^2.6.0"
 
-<<<<<<< HEAD
 diff@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
-=======
-diff@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
-  integrity sha512-A46qtFgd+g7pDZinpnwiRJtxbC1hpgf0uzP3iG89scHk0AUC7A1TGxf5OiiOUv/JMZR8GOt8hL900hV0bOy5xA==
-
-diff@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/diff/-/diff-5.0.0.tgz#7ed6ad76d859d030787ec35855f5b1daf31d852b"
-  integrity sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 
 diff@^5.0.0:
   version "5.0.0"
@@ -9645,17 +9257,15 @@ electron-to-chromium@^1.3.564, electron-to-chromium@^1.3.857:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.860.tgz#d612e54ed75fa524c12af8da3ad8121ebfe2802b"
   integrity sha512-gWwGZ+Wv4Mou2SJRH6JQzhTPjL5f95SX7n6VkLTQ/Q/INsZLZNQ1vH2GlZjozKyvT0kkFuCmWTwIoCj+/hUDPw==
 
-<<<<<<< HEAD
 electron-to-chromium@^1.3.649, electron-to-chromium@^1.4.71:
   version "1.4.72"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.72.tgz#19b871f1da8be8199b2330d694fc84fcdb72ecd9"
   integrity sha512-9LkRQwjW6/wnSfevR21a3k8sOJ+XWSH7kkzs9/EUenKmuDkndP3W9y1yCZpOxufwGbX3JV8glZZSDb4o95zwXQ==
-=======
+
 electron-to-chromium@^1.4.76:
   version "1.4.79"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.79.tgz#02b504e1e6039b2e61edfc5f856895a0927925f5"
   integrity sha512-nWfAxof87mGHkbORCwVRPst4FlSVdprOKS6dBMrcwn3sjwf8iHXEhsu1+FU5Psd7Ps3KKeBufAdfsPK5BmbSUg==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 
 element-resize-detector@^1.2.2:
   version "1.2.3"
@@ -10268,7 +9878,6 @@ ember-cli-version-checker@^5.1.1, ember-cli-version-checker@^5.1.2:
     semver "^7.3.4"
     silent-error "^1.1.1"
 
-<<<<<<< HEAD
 ember-cli@~3.28.5:
   version "3.28.5"
   resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.28.5.tgz#9c91266e412f6d537b47a88e4b63a2b56db35483"
@@ -10276,24 +9885,11 @@ ember-cli@~3.28.5:
   dependencies:
     "@babel/core" "^7.13.8"
     "@babel/plugin-transform-modules-amd" "^7.12.1"
-=======
-ember-cli@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-4.2.0.tgz#5b7fc39d7543fd23056f836f445a3a8307473d72"
-  integrity sha512-HkWw9lqgBoQTHPgHOkKdpw0toPsHnTMg2acCBd7Vneztn2TdDXJQgy4KheB4NoL1NDDFXHOu+PnL4feHUB7wCg==
-  dependencies:
-    "@babel/core" "^7.16.7"
-    "@babel/plugin-transform-modules-amd" "^7.16.7"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     amd-name-resolver "^1.3.1"
     babel-plugin-module-resolver "^4.1.0"
     bower-config "^1.4.3"
     bower-endpoint-parser "0.2.2"
-<<<<<<< HEAD
     broccoli "^3.5.1"
-=======
-    broccoli "^3.5.2"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     broccoli-amd-funnel "^2.0.1"
     broccoli-babel-transpiler "^7.8.0"
     broccoli-builder "^0.18.14"
@@ -10301,25 +9897,17 @@ ember-cli@^4.2.0:
     broccoli-config-loader "^1.0.1"
     broccoli-config-replace "^1.1.2"
     broccoli-debug "^0.6.5"
-<<<<<<< HEAD
     broccoli-funnel "^3.0.5"
-=======
-    broccoli-funnel "^3.0.8"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     broccoli-funnel-reducer "^1.0.0"
     broccoli-merge-trees "^3.0.2"
     broccoli-middleware "^2.1.1"
     broccoli-slow-trees "^3.1.0"
-    broccoli-source "^3.0.1"
+    broccoli-source "^3.0.0"
     broccoli-stew "^3.0.0"
     calculate-cache-key-for-tree "^2.0.0"
     capture-exit "^2.0.0"
     chalk "^4.1.0"
-<<<<<<< HEAD
     ci-info "^2.0.0"
-=======
-    ci-info "^3.3.0"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     clean-base-url "^1.0.0"
     compression "^1.7.4"
     configstore "^5.0.1"
@@ -10334,17 +9922,10 @@ ember-cli@^4.2.0:
     ember-cli-string-utils "^1.1.0"
     ember-source-channel-url "^3.0.0"
     ensure-posix-path "^1.1.1"
-<<<<<<< HEAD
     execa "^5.0.0"
     exit "^0.1.2"
     express "^4.17.1"
     filesize "^6.1.0"
-=======
-    execa "^5.1.1"
-    exit "^0.1.2"
-    express "^4.17.2"
-    filesize "^8.0.6"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     find-up "^5.0.0"
     find-yarn-workspace-root "^2.0.0"
     fixturify-project "^2.1.1"
@@ -10352,25 +9933,16 @@ ember-cli@^4.2.0:
     fs-tree-diff "^2.0.1"
     get-caller-file "^2.0.5"
     git-repo-info "^2.1.1"
-    glob "^7.2.0"
+    glob "^7.1.6"
     heimdalljs "^0.2.6"
-<<<<<<< HEAD
     heimdalljs-fs-monitor "^1.1.0"
-=======
-    heimdalljs-fs-monitor "^1.1.1"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     heimdalljs-graph "^1.0.0"
     heimdalljs-logger "^0.1.10"
     http-proxy "^1.18.1"
-    inflection "^1.13.1"
+    inflection "^1.12.0"
     is-git-url "^1.0.0"
-<<<<<<< HEAD
     is-language-code "^2.0.0"
     isbinaryfile "^4.0.6"
-=======
-    is-language-code "^3.1.0"
-    isbinaryfile "^4.0.8"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     js-yaml "^3.14.0"
     json-stable-stringify "^1.0.1"
     leek "0.0.24"
@@ -10380,11 +9952,7 @@ ember-cli@^4.2.0:
     minimatch "^3.0.4"
     morgan "^1.10.0"
     nopt "^3.0.6"
-<<<<<<< HEAD
     npm-package-arg "^8.1.1"
-=======
-    npm-package-arg "^8.1.5"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     p-defer "^3.0.0"
     portfinder "^1.0.28"
     promise-map-series "^0.3.0"
@@ -10392,30 +9960,18 @@ ember-cli@^4.2.0:
     quick-temp "^0.1.8"
     resolve "^1.20.0"
     resolve-package-path "^3.1.0"
-<<<<<<< HEAD
     sane "^4.1.0"
-=======
-    sane "^5.0.1"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     semver "^7.3.4"
     silent-error "^1.1.1"
     sort-package-json "^1.49.0"
     symlink-or-copy "^1.3.1"
     temp "0.9.4"
-<<<<<<< HEAD
     testem "^3.2.0"
-=======
-    testem "^3.6.0"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     tiny-lr "^2.0.0"
     tree-sync "^2.1.0"
     uuid "^8.3.2"
     walk-sync "^2.2.0"
-<<<<<<< HEAD
     watch-detector "^1.0.0"
-=======
-    watch-detector "^1.0.1"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
     workerpool "^6.1.4"
     yam "^1.0.0"
 
@@ -11511,11 +11067,6 @@ exec-sh@^0.3.2:
   resolved "https://registry.yarnpkg.com/exec-sh/-/exec-sh-0.3.4.tgz#3a018ceb526cc6f6df2bb504b2bfe8e3a4934ec5"
   integrity sha512-sEFIkc61v75sWeOe72qyrqg2Qg0OuLESziUDk/O/z2qgS15y2gWVFrI6f2Qn/qw/0/NCfCEsmNA4zOjkwEZT1A==
 
-exec-sh@^0.3.4:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/exec-sh/-/exec-sh-0.3.6.tgz#ff264f9e325519a60cb5e273692943483cca63bc"
-  integrity sha512-nQn+hI3yp+oD0huYhKwvYI32+JFeq+XkNcD1GAo3Y/MjxsfVGmrrzrnzjWiNY6f+pUCP440fThsFh5gZrRAU/w==
-
 execa@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/execa/-/execa-1.0.0.tgz#c6236a5bb4df6d6f15e88e7f017798216749ddd8"
@@ -11656,42 +11207,6 @@ express@^4.10.7, express@^4.13.1, express@^4.17.1:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-express@^4.17.2:
-  version "4.17.3"
-  resolved "https://registry.yarnpkg.com/express/-/express-4.17.3.tgz#f6c7302194a4fb54271b73a1fe7a06478c8f85a1"
-  integrity sha512-yuSQpz5I+Ch7gFrPCk4/c+dIBKlQUxtgwqzph132bsT6qhuzss6I8cLJQz7B3rFblzd6wtcI0ZbGltH/C4LjUg==
-  dependencies:
-    accepts "~1.3.8"
-    array-flatten "1.1.1"
-    body-parser "1.19.2"
-    content-disposition "0.5.4"
-    content-type "~1.0.4"
-    cookie "0.4.2"
-    cookie-signature "1.0.6"
-    debug "2.6.9"
-    depd "~1.1.2"
-    encodeurl "~1.0.2"
-    escape-html "~1.0.3"
-    etag "~1.8.1"
-    finalhandler "~1.1.2"
-    fresh "0.5.2"
-    merge-descriptors "1.0.1"
-    methods "~1.1.2"
-    on-finished "~2.3.0"
-    parseurl "~1.3.3"
-    path-to-regexp "0.1.7"
-    proxy-addr "~2.0.7"
-    qs "6.9.7"
-    range-parser "~1.2.1"
-    safe-buffer "5.2.1"
-    send "0.17.2"
-    serve-static "1.14.2"
-    setprototypeof "1.2.0"
-    statuses "~1.5.0"
-    type-is "~1.6.18"
-    utils-merge "1.0.1"
-    vary "~1.1.2"
-
 extend-shallow@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/extend-shallow/-/extend-shallow-2.0.1.tgz#51af7d614ad9a9f610ea1bafbb989d6b1c56890f"
@@ -11740,7 +11255,6 @@ extract-stack@^2.0.0:
   resolved "https://registry.yarnpkg.com/extract-stack/-/extract-stack-2.0.0.tgz#11367bc865bfcd9bc0db3123e5edb57786f11f9b"
   integrity sha512-AEo4zm+TenK7zQorGK1f9mJ8L14hnTDi2ZQPR+Mub1NX8zimka1mXpV5LpH8x9HoUmFSHZCfLHqWvp0Y4FxxzQ==
 
-<<<<<<< HEAD
 extract-zip@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/extract-zip/-/extract-zip-2.0.1.tgz#663dca56fe46df890d5f131ef4a06d22bb8ba13a"
@@ -11752,8 +11266,6 @@ extract-zip@^2.0.1:
   optionalDependencies:
     "@types/yauzl" "^2.9.1"
 
-=======
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 extsprintf@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.3.0.tgz#96918440e3041a7a414f8c52e3c574eb3c3e1e05"
@@ -11893,7 +11405,7 @@ faye-websocket@^0.11.3:
   dependencies:
     websocket-driver ">=0.5.1"
 
-fb-watchman@^2.0.0, fb-watchman@^2.0.1:
+fb-watchman@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fb-watchman/-/fb-watchman-2.0.1.tgz#fc84fb39d2709cf3ff6d743706157bb5708a8a85"
   integrity sha512-DkPJKQeY6kKwmuMretBhr7G6Vodr7bFwDYTXIkfG1gjvNpaxBTQV3PbXg6bR1c1UP4jPOX0jHUbbHANL9vRjVg==
@@ -11965,10 +11477,10 @@ filesize@^4.1.2:
   resolved "https://registry.yarnpkg.com/filesize/-/filesize-4.2.1.tgz#ab1cb2069db5d415911c1a13e144c0e743bc89bc"
   integrity sha512-bP82Hi8VRZX/TUBKfE24iiUGsB/sfm2WUrwTQyAzQrhO3V9IhcBBNBXMyzLY5orACxRyYJ3d2HeRVX+eFv4lmA==
 
-filesize@^8.0.6:
-  version "8.0.7"
-  resolved "https://registry.yarnpkg.com/filesize/-/filesize-8.0.7.tgz#695e70d80f4e47012c132d57a059e80c6b580bd8"
-  integrity sha512-pjmC+bkIF8XI7fWaH8KxHcZL3DPybs1roSKP4rKDvy20tAWwIObE4+JIseG2byfGKhud5ZnM4YSGKBz7Sh0ndQ==
+filesize@^6.1.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/filesize/-/filesize-6.4.0.tgz#914f50471dd66fdca3cefe628bd0cde4ef769bcd"
+  integrity sha512-mjFIpOHC4jbfcTfoh4rkWpI31mF7viw9ikj/JyLoKzqlwG/YsefKfvYlYhdYdg/9mtK2z1AzgN/0LvVQ3zdlSQ==
 
 fill-range@^4.0.0:
   version "4.0.0"
@@ -12839,11 +12351,7 @@ good-listener@^1.2.2:
   dependencies:
     delegate "^3.1.2"
 
-<<<<<<< HEAD
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.3, graceful-fs@^4.1.9:
-=======
-graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@^4.2.0:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
   integrity sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
@@ -12920,14 +12428,11 @@ has-bigints@^1.0.1:
   resolved "https://registry.yarnpkg.com/has-bigints/-/has-bigints-1.0.1.tgz#64fe6acb020673e3b78db035a5af69aa9d07b113"
   integrity sha512-LSBS2LjbNBTf6287JEbEzvJgftkF5qFkmCo9hDRpAzKhUOlJ+hx8dd4USs00SgsUNwc4617J9ki5YtEClM2ffA==
 
-<<<<<<< HEAD
 has-color@~0.1.0:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/has-color/-/has-color-0.1.7.tgz#67144a5260c34fc3cca677d041daf52fe7b78b2f"
   integrity sha512-kaNz5OTAYYmt646Hkqw50/qyxP2vFnTVu5AQ1Zmk22Kk5+4Qx6BpO8+u7IKsML5fOsFk0ZT0AcCJNYwcvaLBvw==
 
-=======
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 has-flag@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
@@ -13112,11 +12617,7 @@ he@^1.2.0:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
-<<<<<<< HEAD
 heimdalljs-fs-monitor@^1.1.0:
-=======
-heimdalljs-fs-monitor@^1.1.1:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/heimdalljs-fs-monitor/-/heimdalljs-fs-monitor-1.1.1.tgz#bb4021007e88484202402cdf594e3962d70dc4f4"
   integrity sha512-BHB8oOXLRlrIaON0MqJSEjGVPDyqt2Y6gu+w2PaEZjrCxeVtZG7etEZp7M4ZQ80HNvnr66KIQ2lot2qdeG8HgQ==
@@ -13284,17 +12785,6 @@ http-errors@1.7.2:
     setprototypeof "1.1.1"
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.0"
-
-http-errors@1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.8.1.tgz#7c3f28577cbc8a207388455dbd62295ed07bd68c"
-  integrity sha512-Kpk9Sm7NmI+RHhnj6OIWDI1d6fIoFAtFt9RLaTMRlg/8w49juAStsrBgp0Dp4OdxdVbRIeKhtCUvoi/RuAhO4g==
-  dependencies:
-    depd "~1.1.2"
-    inherits "2.0.4"
-    setprototypeof "1.2.0"
-    statuses ">= 1.5.0 < 2"
-    toidentifier "1.0.1"
 
 http-errors@~1.6.2:
   version "1.6.3"
@@ -13714,13 +13204,6 @@ is-core-module@^2.1.0, is-core-module@^2.2.0, is-core-module@^2.8.1:
   dependencies:
     has "^1.0.3"
 
-is-core-module@^2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.8.1.tgz#f59fdfca701d5879d0a6b100a40aa1560ce27211"
-  integrity sha512-SdNCUs284hr40hFTFP6l0IfZ/RSrMXF3qgoRHd3/79unUTvrFO/JoXwkGm+5J/Oe3E/b5GsnG330uUNgRpu1PA==
-  dependencies:
-    has "^1.0.3"
-
 is-data-descriptor@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/is-data-descriptor/-/is-data-descriptor-0.1.4.tgz#0b5ee648388e2c860282e793f1856fec3f301b56"
@@ -13869,19 +13352,10 @@ is-ip@^3.1.0:
   dependencies:
     ip-regex "^4.0.0"
 
-<<<<<<< HEAD
 is-language-code@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/is-language-code/-/is-language-code-2.0.0.tgz#6f4d59c551d73b98c45cf9f1d3ce65cee060e65b"
   integrity sha512-6xKmRRcP2YdmMBZMVS3uiJRPQgcMYolkD6hFw2Y4KjqyIyaJlCGxUt56tuu0iIV8q9r8kMEo0Gjd/GFwKrgjbw==
-=======
-is-language-code@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/is-language-code/-/is-language-code-3.1.0.tgz#b2386b49227e7010636f16d0c2c681ca40136ab5"
-  integrity sha512-zJdQ3QTeLye+iphMeK3wks+vXSRFKh68/Pnlw7aOfApFSEIOhYa8P9vwwa6QrImNNBMJTiL1PpYF0f4BxDuEgA==
-  dependencies:
-    "@babel/runtime" "^7.14.0"
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 
 is-map@^2.0.2:
   version "2.0.2"
@@ -14076,10 +13550,10 @@ isarray@^2.0.5:
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-2.0.5.tgz#8af1e4c1221244cc62459faf38940d4e644a5723"
   integrity sha512-xHjhDr3cNBK0BzdUJSPXZntQUx/mwMS5Rw4A7lPJ90XGAO6ISP/ePDNuo0vhqOZU+UD5JoodwCAAoZQd3FeAKw==
 
-isbinaryfile@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/isbinaryfile/-/isbinaryfile-4.0.8.tgz#5d34b94865bd4946633ecc78a026fc76c5b11fcf"
-  integrity sha512-53h6XFniq77YdW+spoRrebh0mnmTxRPTlcuIArO57lmMdq4uBKFKaeTjnb92oYWrSn/LVL+LT+Hap2tFQj8V+w==
+isbinaryfile@^4.0.6:
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/isbinaryfile/-/isbinaryfile-4.0.10.tgz#0c5b5e30c2557a2f06febd37b7322946aaee42b3"
+  integrity sha512-iHrqe5shvBUcFbmZq9zOQHBoeOhZJu6RQGrDpBgenUm/Am+F3JM2MgQj+rK3Z601fzrL5gLZWtAPH2OBaSVcyw==
 
 isexe@^2.0.0:
   version "2.0.0"
@@ -15310,17 +14784,10 @@ mime-db@1.50.0, "mime-db@>= 1.43.0 < 2":
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.50.0.tgz#abd4ac94e98d3c0e185016c67ab45d5fde40c11f"
   integrity sha512-9tMZCDlYHqeERXEHO9f/hKfNXhre5dK2eE/krIvUjZbS2KPcqGDfNShIWS1uW9XOTKQKqK6qbeOci18rbfW77A==
 
-<<<<<<< HEAD
 mime-db@1.52.0:
   version "1.52.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.52.0.tgz#bbabcdc02859f4987301c856e3387ce5ec43bf70"
   integrity sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==
-=======
-mime-db@1.51.0:
-  version "1.51.0"
-  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.51.0.tgz#d9ff62451859b18342d960850dc3cfb77e63fb0c"
-  integrity sha512-5y8A56jg7XVQx2mbv1lu49NR4dokRnhZYTtL+KGfaa27uq4pSTXkwQkFJl4pkRMyNFz/EtYDSkiiEHx3F7UN6g==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 
 mime-types@^2.1.12, mime-types@^2.1.18, mime-types@^2.1.26, mime-types@~2.1.19:
   version "2.1.28"
@@ -15347,13 +14814,6 @@ mime-types@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-1.0.2.tgz#995ae1392ab8affcbfcb2641dd054e943c0d5dce"
   integrity sha1-mVrhOSq4r/y/yyZB3QVOlDwNXc4=
-
-mime-types@~2.1.34:
-  version "2.1.34"
-  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.34.tgz#5a712f9ec1503511a945803640fafe09d3793c24"
-  integrity sha512-6cP692WwGIs9XXdOO4++N+7qjqv0rqxxVvJ3VHPh/Sc9mVZcQP+ZGhkKiTvWMQRr2tbHkJP/Yn7Y0npb3ZBs4A==
-  dependencies:
-    mime-db "1.51.0"
 
 mime@1.6.0:
   version "1.6.0"
@@ -15612,7 +15072,7 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-ms@2.1.3, ms@^2.1.1:
+ms@^2.1.1:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
@@ -15669,16 +15129,7 @@ negotiator@0.6.2:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.2.tgz#feacf7ccf525a77ae9634436a64883ffeca346fb"
   integrity sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==
 
-<<<<<<< HEAD
 neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1, neo-async@^2.6.2:
-=======
-negotiator@0.6.3:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
-  integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
-
-neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
@@ -15712,24 +15163,17 @@ no-case@^3.0.4:
     lower-case "^2.0.2"
     tslib "^2.0.3"
 
-<<<<<<< HEAD
-node-fetch@^2.6.0, node-fetch@^2.6.1:
-=======
 node-fetch@^2.6.0:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
   dependencies:
     whatwg-url "^5.0.0"
-<<<<<<< HEAD
-=======
 
 node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 
 node-int64@^0.4.0:
   version "0.4.0"
@@ -15797,11 +15241,6 @@ node-releases@^2.0.2:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.2.tgz#7139fe71e2f4f11b47d4d2986aaf8c48699e0c01"
   integrity sha512-XxYDdcQ6eKqp/YjI+tb2C5WM2LgjnZrfYg4vgQt49EK268b6gYCHsBLrK2qvJo4FmCtqmKezb0WZFK4fkrZNsg==
 
-node-releases@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.2.tgz#7139fe71e2f4f11b47d4d2986aaf8c48699e0c01"
-  integrity sha512-XxYDdcQ6eKqp/YjI+tb2C5WM2LgjnZrfYg4vgQt49EK268b6gYCHsBLrK2qvJo4FmCtqmKezb0WZFK4fkrZNsg==
-
 node-uuid@~1.4.0:
   version "1.4.8"
   resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.8.tgz#b040eb0923968afabf8d32fb1f17f1167fdab907"
@@ -15859,11 +15298,7 @@ npm-git-info@^1.0.3:
   resolved "https://registry.yarnpkg.com/npm-git-info/-/npm-git-info-1.0.3.tgz#a933c42ec321e80d3646e0d6e844afe94630e1d5"
   integrity sha1-qTPELsMh6A02RuDW6ESv6UYw4dU=
 
-<<<<<<< HEAD
 npm-package-arg@^8.1.1:
-=======
-npm-package-arg@^8.1.5:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "8.1.5"
   resolved "https://registry.yarnpkg.com/npm-package-arg/-/npm-package-arg-8.1.5.tgz#3369b2d5fe8fdc674baa7f1786514ddc15466e44"
   integrity sha512-LhgZrg0n0VgvzVdSm1oiZworPbTxYHUJCgtsJW8mGvlDpxTM1vSJc3m5QZeUkhAHIzbz3VCHd/R4osi1L1Tg/Q==
@@ -16794,11 +16229,7 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
 
-<<<<<<< HEAD
 pretender@^3.0.1, pretender@^3.4.7:
-=======
-pretender@^3.0.1:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "3.4.7"
   resolved "https://registry.yarnpkg.com/pretender/-/pretender-3.4.7.tgz#34a2ae2d1fc9db440a990d50e6c0f5481d8755fc"
   integrity sha512-jkPAvt1BfRi0RKamweJdEcnjkeu7Es8yix3bJ+KgBC5VpG/Ln4JE3hYN6vJym4qprm8Xo5adhWpm3HCoft1dOw==
@@ -16960,7 +16391,7 @@ property-information@^5.0.0, property-information@^5.3.0:
   dependencies:
     xtend "^4.0.0"
 
-proxy-addr@~2.0.5, proxy-addr@~2.0.7:
+proxy-addr@~2.0.5:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.7.tgz#f19fe69ceab311eeb94b42e70e8c2070f9ba1025"
   integrity sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==
@@ -17039,11 +16470,6 @@ qs@6.7.0:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
-
-qs@6.9.7:
-  version "6.9.7"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.7.tgz#4610846871485e1e048f44ae3b94033f0e675afe"
-  integrity sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==
 
 qs@^6.10.0:
   version "6.10.1"
@@ -17154,16 +16580,6 @@ raw-body@2.4.0:
   dependencies:
     bytes "3.1.0"
     http-errors "1.7.2"
-    iconv-lite "0.4.24"
-    unpipe "1.0.0"
-
-raw-body@2.4.3:
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.4.3.tgz#8f80305d11c2a0a545c2d9d89d7a0286fcead43c"
-  integrity sha512-UlTNLIcu0uzb4D2f4WltY6cVjLi+/jEN4lgEUj3E04tpMDpUlkBo/eSn6zou9hum2VMNpCCUone0O0WeJim07g==
-  dependencies:
-    bytes "3.1.2"
-    http-errors "1.8.1"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
@@ -17898,18 +17314,6 @@ resolve@^1.14.2, resolve@^1.3.2:
     is-core-module "^2.2.0"
     path-parse "^1.0.6"
 
-<<<<<<< HEAD
-=======
-resolve@^1.20.0:
-  version "1.22.0"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.0.tgz#5e0b8c67c15df57a89bdbabe603a002f21731198"
-  integrity sha512-Hhtrw0nLeSrFQ7phPp4OOcVjLPIeMnRlr5mcnVuMe7M/7eBn98A3hmFRLoFo3DLZkivSYwhRUJTyPyWAk56WLw==
-  dependencies:
-    is-core-module "^2.8.1"
-    path-parse "^1.0.7"
-    supports-preserve-symlinks-flag "^1.0.0"
-
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 restore-cursor@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/restore-cursor/-/restore-cursor-2.0.0.tgz#9f7ee287f82fd326d4fd162923d62129eee0dfaf"
@@ -18098,7 +17502,7 @@ safe-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sane@^4.0.0:
+sane@^4.0.0, sane@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/sane/-/sane-4.1.0.tgz#ed881fd922733a6c461bc189dc2b6c006f3ffded"
   integrity sha512-hhbzAgTIX8O7SHfp2c8/kREfEn4qO/9q8C9beyY6+tvZ87EpoZ3i1RIEvp27YBswnNbY9mWd6paKVmKbAgLfZA==
@@ -18110,21 +17514,6 @@ sane@^4.0.0:
     execa "^1.0.0"
     fb-watchman "^2.0.0"
     micromatch "^3.1.4"
-    minimist "^1.1.1"
-    walker "~1.0.5"
-
-sane@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/sane/-/sane-5.0.1.tgz#ae94cb06acf5ad158242ff23f563d8cbe0ec1e4b"
-  integrity sha512-9/0CYoRz0MKKf04OMCO3Qk3RQl1PAwWAhPSQSym4ULiLpTZnrY1JoZU0IEikHu8kdk2HvKT/VwQMq/xFZ8kh1Q==
-  dependencies:
-    "@cnakazawa/watch" "^1.0.3"
-    anymatch "^3.1.1"
-    capture-exit "^2.0.0"
-    exec-sh "^0.3.4"
-    execa "^4.0.0"
-    fb-watchman "^2.0.1"
-    micromatch "^4.0.2"
     minimist "^1.1.1"
     walker "~1.0.5"
 
@@ -18231,22 +17620,14 @@ semver@^6.0.0, semver@^6.1.0, semver@^6.1.1, semver@^6.1.2, semver@^6.3.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.0.tgz#ee0a64c8af5e8ceea67687b133761e1becbd1d3d"
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
 
-<<<<<<< HEAD
-semver@^7.1.3, semver@^7.3.4, semver@^7.3.5:
-=======
 semver@^7.1.3, semver@^7.3.5:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "7.3.5"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.5.tgz#0b621c879348d8998e4b0e4be94b3f12e6018ef7"
   integrity sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==
   dependencies:
     lru-cache "^6.0.0"
 
-<<<<<<< HEAD
-semver@^7.2.1, semver@^7.3.2:
-=======
 semver@^7.2.1, semver@^7.3.2, semver@^7.3.4:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "7.3.4"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.4.tgz#27aaa7d2e4ca76452f98d3add093a72c943edc97"
   integrity sha512-tCfb2WLjqFAtXn4KEdxIhalnRtoKFN7nAwj0B3ZXCbQloV2tq5eDbcTmT68JJD3nRJq24/XgxtQKFIpQdtvmVw==
@@ -18268,25 +17649,6 @@ send@0.17.1:
     http-errors "~1.7.2"
     mime "1.6.0"
     ms "2.1.1"
-    on-finished "~2.3.0"
-    range-parser "~1.2.1"
-    statuses "~1.5.0"
-
-send@0.17.2:
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/send/-/send-0.17.2.tgz#926622f76601c41808012c8bf1688fe3906f7820"
-  integrity sha512-UJYB6wFSJE3G00nEivR5rgWp8c2xXvJ3OPWPhmuteU0IKj8nKbG3DrjiOmLwpnHGYWAVwA69zmTm++YG0Hmwww==
-  dependencies:
-    debug "2.6.9"
-    depd "~1.1.2"
-    destroy "~1.0.4"
-    encodeurl "~1.0.2"
-    escape-html "~1.0.3"
-    etag "~1.8.1"
-    fresh "0.5.2"
-    http-errors "1.8.1"
-    mime "1.6.0"
-    ms "2.1.3"
     on-finished "~2.3.0"
     range-parser "~1.2.1"
     statuses "~1.5.0"
@@ -18333,16 +17695,6 @@ serve-static@1.14.1:
     parseurl "~1.3.3"
     send "0.17.1"
 
-serve-static@1.14.2:
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/serve-static/-/serve-static-1.14.2.tgz#722d6294b1d62626d41b43a013ece4598d292bfa"
-  integrity sha512-+TMNA9AFxUEGuC0z2mevogSnn9MXKb4fa7ngeRMJaaGv8vTwnIEkKi+QGvPt33HSnf8pRS+WGM0EbMtCJLKMBQ==
-  dependencies:
-    encodeurl "~1.0.2"
-    escape-html "~1.0.3"
-    parseurl "~1.3.3"
-    send "0.17.2"
-
 set-blocking@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
@@ -18372,11 +17724,6 @@ setprototypeof@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
   integrity sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
-
-setprototypeof@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.2.0.tgz#66c9a24a73f9fc28cbe66b09fed3d33dcaf1b424"
-  integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
 
 sha.js@^2.4.0, sha.js@^2.4.8:
   version "2.4.11"
@@ -19384,11 +18731,7 @@ testem-multi-reporter@^1.2.0:
   resolved "https://registry.yarnpkg.com/testem-multi-reporter/-/testem-multi-reporter-1.2.0.tgz#e93abdee54f821eb464232aba6b6483f2802664e"
   integrity sha512-ttIds/wpU0njpRBQsDl+tcPOy8jvafad6MCEIy21+BpNEcpCBZWrYuNva8TtxaZcoLuFTW0B8FsWl6XuJfH3rQ==
 
-<<<<<<< HEAD
 testem@^3.0.3, testem@^3.2.0:
-=======
-testem@^3.0.3, testem@^3.6.0:
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/testem/-/testem-3.6.0.tgz#bf5c86944bafd035c18f41f520195cce5eef33a8"
   integrity sha512-sXwx2IlOadOhrKf0hsV1Yt/yuYhdfrtJ4dpp7T6pFN62GjMyKifjAv2SFm+4zYHee1JwxheO7JUL0+3iN0rlHw==
@@ -19598,11 +18941,6 @@ toidentifier@1.0.0:
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
-toidentifier@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.1.tgz#3be34321a88a820ed1bd80dfaa33e479fbb8dd35"
-  integrity sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==
-
 tough-cookie@>=0.12.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-4.0.0.tgz#d822234eeca882f991f0f908824ad2622ddbece4"
@@ -19641,7 +18979,6 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=
 
-<<<<<<< HEAD
 tracked-maps-and-sets@^3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/tracked-maps-and-sets/-/tracked-maps-and-sets-3.0.2.tgz#6ea1b9f2a367d24f2e9905b74b24437fbce76ea6"
@@ -19652,8 +18989,6 @@ tracked-maps-and-sets@^3.0.1:
     ember-cli-typescript "^4.2.1"
     ember-tracked-storage-polyfill "1.0.0"
 
-=======
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 tree-sync@^1.2.2:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/tree-sync/-/tree-sync-1.4.0.tgz#314598d13abaf752547d9335b8f95d9a137100d6"
@@ -20340,16 +19675,6 @@ watch-detector@^1.0.0:
     silent-error "^1.1.1"
     tmp "^0.1.0"
 
-watch-detector@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/watch-detector/-/watch-detector-1.0.1.tgz#3106a6b489284ec2ecaef0e65cf1b8ec9117296e"
-  integrity sha512-8sJ8rvNfg2ciqCa5IxIdmdxU/vuUe9V/jw+thXbdreELSv3+Cq6k8K42cLEL86W2td1PMmfNCWZuAhrZ/sD4mw==
-  dependencies:
-    heimdalljs-logger "^0.1.10"
-    semver "^6.3.0"
-    silent-error "^1.1.1"
-    tmp "^0.1.0"
-
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/watchpack-chokidar2/-/watchpack-chokidar2-2.0.1.tgz#38500072ee6ece66f3769936950ea1771be1c957"
@@ -20663,11 +19988,6 @@ workerpool@^6.1.4:
   resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.2.0.tgz#827d93c9ba23ee2019c3ffaff5c27fccea289e8b"
   integrity sha512-Rsk5qQHJ9eowMH28Jwhe8HEbmdYDX4lwoMWshiCXugjtHqMD9ZbiqSDLxcsfdqsETPzVUtX5s1Z5kStiIM6l4A==
 
-workerpool@^6.1.4:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.2.0.tgz#827d93c9ba23ee2019c3ffaff5c27fccea289e8b"
-  integrity sha512-Rsk5qQHJ9eowMH28Jwhe8HEbmdYDX4lwoMWshiCXugjtHqMD9ZbiqSDLxcsfdqsETPzVUtX5s1Z5kStiIM6l4A==
-
 wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
@@ -20741,14 +20061,11 @@ xmlchars@^2.2.0:
   resolved "https://registry.yarnpkg.com/xmlchars/-/xmlchars-2.2.0.tgz#060fe1bcb7f9c76fe2a17db86a9bc3ab894210cb"
   integrity sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==
 
-<<<<<<< HEAD
 xstate@^4.12.0:
   version "4.30.5"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.30.5.tgz#c2c6753542578bf15e707b759ebb671f55849410"
   integrity sha512-iZhIoZP8Alq4qI8eN/iAYiBRLfLSbSdI29LYsgk2DUvAwMV2J9xGw6CUT2HcH+5Rp5G3XzG6ByRfRmJJ+eEuDQ==
 
-=======
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
@@ -20820,7 +20137,6 @@ yargs@^16.2.0:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
-<<<<<<< HEAD
 yauzl@^2.10.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/yauzl/-/yauzl-2.10.0.tgz#c7eb17c93e112cb1086fa6d8e51fb0667b79a5f9"
@@ -20829,8 +20145,6 @@ yauzl@^2.10.0:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.1.0"
 
-=======
->>>>>>> a3a7757b2 (Hackweek implementation of OIDC)
 yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"

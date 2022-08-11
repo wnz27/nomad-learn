@@ -203,7 +203,7 @@ require (
 	github.com/gookit/color v1.3.1 // indirect
 	github.com/gophercloud/gophercloud v0.1.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
-	github.com/hashicorp/cap v0.1.1 // indirect
+	github.com/hashicorp/cap v0.1.1
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.0 // indirect
 	github.com/hashicorp/go-rootcerts v1.0.2 // indirect

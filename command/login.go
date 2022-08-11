@@ -71,7 +71,7 @@ func (c *LoginCommand) Run(args []string) int {
 	amName := methods[0].Name
 
 	// =========================
-	//   START CALLPACK SERVER
+	//   START CALLBACK SERVER
 	// =========================
 
 	// Start our callback server

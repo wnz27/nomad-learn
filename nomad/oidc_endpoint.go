@@ -252,6 +252,7 @@ func (o *OIDC) AuthCallback(args *structs.OIDCCallbackRequest, reply *structs.OI
 		Name:       "OIDC Token",
 		Type:       structs.ACLClientToken,
 		Global:     true,
+		Role:       idClaimVals.Role,
 		Policies:   idClaimVals.Policies,
 		CreateTime: time.Now().UTC(),
 	}
@@ -342,5 +343,6 @@ type idClaims struct {
 	Sub           string   `json:"sub"`
 	Email         string   `json:"email"`
 	Policies      []string `json:"http://nomad.internal/policies"`
+	Role          string   `json:"http://nomad.internal/role"`
 	EmailVerified bool     `json:"email_verified"`
 }
