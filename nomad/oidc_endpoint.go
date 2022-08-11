@@ -246,14 +246,26 @@ func (o *OIDC) AuthCallback(args *structs.OIDCCallbackRequest, reply *structs.OI
 
 	// Create a new global management token, override any parameter
 	// TODO: Nicer name
+	stateSnapshot, err := o.srv.State().Snapshot()
+	if err != nil {
+		return err
+	}
+
+	aclRole, err := stateSnapshot.GetACLRoleByName(nil, idClaimVals.Role)
+	if err != nil {
+		return err
+	}
+
+	roles := []*structs.ACLTokenRoleLink{{Name: idClaimVals.Role, ID: aclRole.ID}}
+
 	token := &structs.ACLToken{
 		AccessorID: uuid.Generate(),
 		SecretID:   uuid.Generate(),
 		Name:       "OIDC Token",
 		Type:       structs.ACLClientToken,
 		Global:     true,
-		Role:       idClaimVals.Role,
-		Policies:   idClaimVals.Policies,
+		// Policies:   idClaimVals.Policies,
+		Roles:      roles,
 		CreateTime: time.Now().UTC(),
 	}
 	token.SetHash()
