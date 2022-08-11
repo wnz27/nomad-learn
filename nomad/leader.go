@@ -395,6 +395,7 @@ func (s *Server) establishLeadership(stopCh chan struct{}) error {
 		default:
 			go s.replicateACLPolicies(stopCh)
 			go s.replicateACLTokens(stopCh)
+			go s.replicateACLRoles(stopCh)
 			go s.replicateNamespaces(stopCh)
 		}
 	}
@@ -1677,6 +1678,200 @@ func diffACLTokens(store *state.StateStore, minIndex uint64, remoteList []*struc
 			// Check if policy is newer remotely and there is a hash mis-match.
 		} else if rp.ModifyIndex > minIndex && !bytes.Equal(localHash, rp.Hash) {
 			update = append(update, rp.AccessorID)
+		}
+	}
+
+	// Check if local token should be deleted
+	for lp := range local {
+		if _, ok := remote[lp]; !ok {
+			delete = append(delete, lp)
+		}
+	}
+	return
+}
+
+// replicateACLTokens is used to replicate ACL Roles from the authoritative
+// region to this region. The loop should only be run on the leader within the
+// federated region.
+func (s *Server) replicateACLRoles(stopCh chan struct{}) {
+
+	// Generate our request object. We only need to do this once and reuse it
+	// for every RPC request. The MinQueryIndex is updated after every
+	// successful replication loop, so the next query acts as a blocking query
+	// and only returns upon a change in the authoritative region.
+	req := structs.ACLRolesListRequest{
+		QueryOptions: structs.QueryOptions{
+			Region:     s.config.AuthoritativeRegion,
+			AllowStale: true,
+		},
+	}
+
+	// Create our replication rate limiter for ACL roles and log a lovely
+	// message to indicate the process is starting.
+	limiter := rate.NewLimiter(replicationRateLimit, int(replicationRateLimit))
+	s.logger.Debug("starting ACL Role replication from authoritative region",
+		"authoritative_region", req.Region)
+
+	// Enter the main ACL Role replication loop that will only exit when the
+	// stopCh is closed.
+	//
+	// Any error encountered will use the replicationBackoffContinue function
+	// which handles replication backoff and shutdown coordination in the event
+	// of an error inside the loop.
+	for {
+		select {
+		case <-stopCh:
+			return
+		default:
+
+			// Rate limit how often we attempt replication. It is OK to ignore
+			// the error as the context will never be cancelled and the limit
+			// parameters are controlled internally.
+			_ = limiter.Wait(context.Background())
+
+			// Set the replication token on each replication iteration so that
+			// it is always current and can handle agent SIGHUP reloads.
+			req.AuthToken = s.ReplicationToken()
+
+			var resp structs.ACLRolesListResponse
+
+			// Make the list RPC request to the authoritative region, so we
+			// capture the latest ACL role listing.
+			err := s.forwardRegion(s.config.AuthoritativeRegion, structs.ACLListRolesRPCMethod, &req, &resp)
+			if err != nil {
+				s.logger.Error("failed to fetch ACL Roles from authoritative region", "error", err)
+				if s.replicationBackoffContinue(stopCh) {
+					continue
+				} else {
+					return
+				}
+			}
+
+			// Perform a two-way diff on the ACL roles.
+			toDelete, toUpdate := diffACLRoles(s.State(), req.MinQueryIndex, resp.ACLRoles)
+
+			// If we have ACL roles to delete, make this call directly to Raft.
+			if len(toDelete) > 0 {
+				args := structs.ACLRolesDeleteByIDRequest{ACLRoleIDs: toDelete}
+				_, _, err := s.raftApply(structs.ACLRolesDeleteByIDRequestType, &args)
+				if err != nil {
+					s.logger.Error("failed to delete ACL roles", "error", err)
+					if s.replicationBackoffContinue(stopCh) {
+						continue
+					} else {
+						return
+					}
+				}
+			}
+
+			// Fetch any outdated policies.
+			var fetched []*structs.ACLRole
+			if len(toUpdate) > 0 {
+				req := structs.ACLTokenSetRequest{
+					AccessorIDS: toUpdate,
+					QueryOptions: structs.QueryOptions{
+						Region:        s.config.AuthoritativeRegion,
+						AuthToken:     s.ReplicationToken(),
+						AllowStale:    true,
+						MinQueryIndex: resp.Index - 1,
+					},
+				}
+				var reply structs.ACLTokenSetResponse
+				if err := s.forwardRegion(s.config.AuthoritativeRegion, "ACL.GetTokens", &req, &reply); err != nil {
+					s.logger.Error("failed to fetch ACL Roles from authoritative region", "error", err)
+					if s.replicationBackoffContinue(stopCh) {
+						continue
+					} else {
+						return
+					}
+				}
+				for _, token := range reply.Tokens {
+					fetched = append(fetched, token)
+				}
+			}
+
+			// Update local tokens
+			if len(fetched) > 0 {
+
+				// The replication of ACL roles and policies are independent,
+				// therefore we cannot ensure the policies linked within the
+				// role are present. We must set allow missing to true.
+				args := structs.ACLRolesUpsertRequest{
+					// AllowMissing: true,
+					ACLRoles: fetched,
+				}
+
+				// Perform the upsert directly via Raft.
+				_, _, err := s.raftApply(structs.ACLRolesUpsertRequestType, &args)
+				if err != nil {
+					s.logger.Error("failed to update ACL roles", "error", err)
+					if s.replicationBackoffContinue(stopCh) {
+						continue
+					} else {
+						return
+					}
+				}
+			}
+
+			// Update the minimum query index, blocks until there is a change.
+			req.MinQueryIndex = resp.Index
+		}
+	}
+}
+
+// replicationBackoffContinue should be used when a replication loop encounters
+// an error and wants to wait until either the backoff time has been met, or
+// the stopCh has been closed. The boolean indicates whether the replication
+// process should continue.
+//
+// Typical use:
+//   if s.replicationBackoffContinue(stopCh) {
+//	   continue
+//	 } else {
+//     return
+//   }
+func (s *Server) replicationBackoffContinue(stopCh chan struct{}) bool {
+	select {
+	case <-time.After(s.config.ReplicationBackoff):
+		return true
+	case <-stopCh:
+		return false
+	}
+}
+
+// diffACLRoles is used to perform a two-way diff between the local ACL Roles
+// and the remote Roles to determine which tokens need to be deleted or
+// updated.
+func diffACLRoles(store *state.StateStore, minIndex uint64, remoteList []*structs.ACLRole) (delete []string, update []string) {
+	// Construct a set of the local and remote policies
+	local := make(map[string][]byte)
+	remote := make(map[string]struct{})
+
+	// Add all the local global tokens
+	iter, err := store.GetACLRoles(nil)
+	if err != nil {
+		panic("failed to iterate local tokens")
+	}
+	for {
+		raw := iter.Next()
+		if raw == nil {
+			break
+		}
+		aclRole := raw.(*structs.ACLRole)
+		local[aclRole.ID] = aclRole.Hash
+	}
+
+	// Iterate over the remote tokens
+	for _, rp := range remoteList {
+		remote[rp.ID] = struct{}{}
+
+		// Check if the token is missing locally
+		if localHash, ok := local[rp.ID]; !ok {
+			update = append(update, rp.ID)
+
+			// Check if policy is newer remotely and there is a hash mis-match.
+		} else if rp.ModifyIndex > minIndex && !bytes.Equal(localHash, rp.Hash) {
+			update = append(update, rp.ID)
 		}
 	}
 
