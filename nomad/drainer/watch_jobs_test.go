@@ -174,12 +174,17 @@ func TestDrainingJobWatcher_DrainJobs(t *testing.T) {
 
 	// Proceed our fake migration along by creating new allocs and stopping
 	// old ones
+	//
+	// TODO: extend this test so that it exercises the behavior when we get a
+	// server stop first, followed by a client stop
+	//
 	replacements := make([]*structs.Allocation, len(drainedAllocs))
 	updates := make([]*structs.Allocation, 0, len(drainedAllocs)*2)
 	for i, a := range drainedAllocs {
 		// Stop drained allocs
 		a.DesiredTransition.Migrate = nil
 		a.DesiredStatus = structs.AllocDesiredStatusStop
+		a.ClientStatus = structs.AllocClientStatusComplete
 
 		// Create a replacement
 		replacement := mock.Alloc()
@@ -233,6 +238,7 @@ func TestDrainingJobWatcher_DrainJobs(t *testing.T) {
 	for i, a := range drainedAllocs {
 		a.DesiredTransition.Migrate = nil
 		a.DesiredStatus = structs.AllocDesiredStatusStop
+		a.ClientStatus = structs.AllocClientStatusComplete
 
 		replacement := newAlloc(runningNode, a.Job)
 		updates = append(updates, a, replacement)
@@ -276,6 +282,7 @@ func TestDrainingJobWatcher_DrainJobs(t *testing.T) {
 	for i, a := range drainedAllocs {
 		a.DesiredTransition.Migrate = nil
 		a.DesiredStatus = structs.AllocDesiredStatusStop
+		a.ClientStatus = structs.AllocClientStatusComplete
 
 		replacement := newAlloc(runningNode, a.Job)
 		updates = append(updates, a, replacement)
@@ -328,7 +335,7 @@ type handleTaskGroupTestCase struct {
 	AddAlloc func(i int, a *structs.Allocation, drainingID, runningID string)
 }
 
-func TestHandeTaskGroup_Table(t *testing.T) {
+func TestHandleTaskGroup_Table(t *testing.T) {
 	ci.Parallel(t)
 
 	cases := []handleTaskGroupTestCase{
@@ -397,6 +404,7 @@ func TestHandeTaskGroup_Table(t *testing.T) {
 			AddAlloc: func(i int, a *structs.Allocation, drainingID, runningID string) {
 				if i == 0 {
 					a.DesiredStatus = structs.AllocDesiredStatusStop
+					a.ClientStatus = structs.AllocClientStatusComplete
 					return
 				}
 				a.NodeID = runningID
@@ -412,6 +420,7 @@ func TestHandeTaskGroup_Table(t *testing.T) {
 			AddAlloc: func(i int, a *structs.Allocation, drainingID, runningID string) {
 				if i == 0 {
 					a.DesiredStatus = structs.AllocDesiredStatusStop
+					a.ClientStatus = structs.AllocClientStatusComplete
 					return
 				}
 				a.NodeID = runningID
@@ -425,6 +434,7 @@ func TestHandeTaskGroup_Table(t *testing.T) {
 			ExpectedDone:     true,
 			AddAlloc: func(i int, a *structs.Allocation, drainingID, runningID string) {
 				a.DesiredStatus = structs.AllocDesiredStatusStop
+				a.ClientStatus = structs.AllocClientStatusComplete
 			},
 		},
 		{
@@ -436,6 +446,7 @@ func TestHandeTaskGroup_Table(t *testing.T) {
 			ExpectedDone:     true,
 			AddAlloc: func(i int, a *structs.Allocation, drainingID, runningID string) {
 				a.DesiredStatus = structs.AllocDesiredStatusStop
+				a.ClientStatus = structs.AllocClientStatusComplete
 			},
 		},
 		{
@@ -456,6 +467,7 @@ func TestHandeTaskGroup_Table(t *testing.T) {
 		},
 		{
 			// One on new node, one drained, and one draining
+			Name:             "OneOnNew_OneDrained_OneDraining",
 			ExpectedDrained:  1,
 			ExpectedMigrated: 1,
 			MaxParallel:      2,
@@ -472,6 +484,7 @@ func TestHandeTaskGroup_Table(t *testing.T) {
 		},
 		{
 			// 8 on new node, one drained, and one draining
+			Name:             "8OnNew_OneDrained_OneDraining",
 			ExpectedDrained:  1,
 			ExpectedMigrated: 1,
 			MaxParallel:      2,
@@ -486,6 +499,7 @@ func TestHandeTaskGroup_Table(t *testing.T) {
 		},
 		{
 			// 5 on new node, two drained, and three draining
+			Name:             "5OnNew_2Drained_3Draining",
 			ExpectedDrained:  3,
 			ExpectedMigrated: 2,
 			MaxParallel:      5,
@@ -635,6 +649,7 @@ func TestHandleTaskGroup_Migrations(t *testing.T) {
 
 		if i%2 == 0 {
 			a.DesiredStatus = structs.AllocDesiredStatusStop
+			a.ClientStatus = structs.AllocClientStatusComplete
 		} else {
 			a.ClientStatus = structs.AllocClientStatusFailed
 		}
@@ -704,6 +719,7 @@ func TestHandleTaskGroup_GarbageCollectedNode(t *testing.T) {
 
 		if i%2 == 0 {
 			a.DesiredStatus = structs.AllocDesiredStatusStop
+			a.ClientStatus = structs.AllocClientStatusComplete
 		} else {
 			a.ClientStatus = structs.AllocClientStatusFailed
 		}
