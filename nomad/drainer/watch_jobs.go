@@ -363,6 +363,10 @@ func handleTaskGroup(snap *state.StateSnapshot, batch bool, tg *structs.TaskGrou
 			drainingNodes[alloc.NodeID] = onDrainingNode
 		}
 
+		if onDrainingNode && !alloc.ClientTerminalStatus() {
+			result.done = false
+		}
+
 		// Check if the alloc should be considered migrated. A migrated
 		// allocation is one that is terminal, is on a draining
 		// allocation, and has only happened since our last handled index to
