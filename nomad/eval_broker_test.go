@@ -1,6 +1,7 @@
 package nomad
 
 import (
+	"container/heap"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -11,6 +12,7 @@ import (
 	"github.com/hashicorp/nomad/nomad/mock"
 	"github.com/hashicorp/nomad/nomad/structs"
 	"github.com/hashicorp/nomad/testutil"
+	"github.com/shoenig/test/must"
 	"github.com/stretchr/testify/require"
 )
 
@@ -393,236 +395,111 @@ func TestEvalBroker_Serialize_DuplicateJobID(t *testing.T) {
 
 	ns1 := "namespace-one"
 	ns2 := "namespace-two"
-	eval := mock.Eval()
-	eval.Namespace = ns1
-	b.Enqueue(eval)
+	jobID := "example"
 
-	eval2 := mock.Eval()
-	eval2.JobID = eval.JobID
-	eval2.Namespace = ns1
-	eval2.CreateIndex = eval.CreateIndex + 1
-	b.Enqueue(eval2)
-
-	eval3 := mock.Eval()
-	eval3.JobID = eval.JobID
-	eval3.Namespace = ns1
-	eval3.CreateIndex = eval.CreateIndex + 2
-	b.Enqueue(eval3)
-
-	eval4 := mock.Eval()
-	eval4.JobID = eval.JobID
-	eval4.Namespace = ns2
-	eval4.CreateIndex = eval.CreateIndex + 3
-	b.Enqueue(eval4)
-
-	eval5 := mock.Eval()
-	eval5.JobID = eval.JobID
-	eval5.Namespace = ns2
-	eval5.CreateIndex = eval.CreateIndex + 4
-	b.Enqueue(eval5)
-
-	stats := b.Stats()
-	if stats.TotalReady != 2 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalBlocked != 3 {
-		t.Fatalf("bad: %#v", stats)
+	newEval := func(idx uint64, ns string) *structs.Evaluation {
+		eval := mock.Eval()
+		eval.JobID = jobID
+		eval.Namespace = ns
+		eval.CreateIndex = idx
+		eval.ModifyIndex = idx
+		b.Enqueue(eval)
+		return eval
 	}
 
-	// Dequeue should work
+	// first job
+	eval1 := newEval(1, ns1)
+	newEval(2, ns1)
+	eval3 := newEval(3, ns1)
+	newEval(4, ns1)
+
+	// second job
+	eval5 := newEval(5, ns2)
+	newEval(6, ns2)
+	eval7 := newEval(7, ns2)
+
+	// retreive the stats from the broker, less some stats that aren't
+	// interesting for this test and make the test much more verbose
+	// to include
+	getStats := func() BrokerStats {
+		t.Helper()
+		stats := b.Stats()
+		stats.DelayedEvals = nil
+		stats.ByScheduler = nil
+		return *stats
+	}
+
+	must.Eq(t, BrokerStats{TotalReady: 2, TotalUnacked: 0,
+		TotalBlocked: 5, TotalCancelable: 0}, getStats())
+
+	// Dequeue should get 1st eval
 	out, token, err := b.Dequeue(defaultSched, time.Second)
-	if err != nil {
-		t.Fatalf("err: %v", err)
-	}
-	if out != eval {
-		t.Fatalf("bad : %#v", out)
-	}
+	must.NoError(t, err)
+	must.Eq(t, out, eval1, must.Sprint("expected 1st eval"))
 
-	// Check the stats
-	stats = b.Stats()
-	if stats.TotalReady != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalUnacked != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalBlocked != 3 {
-		t.Fatalf("bad: %#v", stats)
-	}
+	must.Eq(t, BrokerStats{TotalReady: 1, TotalUnacked: 1,
+		TotalBlocked: 5, TotalCancelable: 0}, getStats())
 
-	// Ack out
-	err = b.Ack(eval.ID, token)
-	if err != nil {
-		t.Fatalf("err: %v", err)
-	}
+	// Current wait index should be 4 but Ack to exercise behavior
+	// when worker's Eval.getWaitIndex gets a stale index
+	eval1.ModifyIndex = 3
+	err = b.Ack(eval1.ID, token)
+	must.NoError(t, err)
 
-	// Check the stats
-	stats = b.Stats()
-	if stats.TotalReady != 2 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalUnacked != 0 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalBlocked != 2 {
-		t.Fatalf("bad: %#v", stats)
-	}
+	must.Eq(t, BrokerStats{TotalReady: 2, TotalUnacked: 0,
+		TotalBlocked: 3, TotalCancelable: 1}, getStats())
 
-	// Dequeue should work
+	// Dequeue should get 3rd eval
 	out, token, err = b.Dequeue(defaultSched, time.Second)
-	if err != nil {
-		t.Fatalf("err: %v", err)
-	}
-	if out != eval2 {
-		t.Fatalf("bad : %#v", out)
-	}
+	must.NoError(t, err)
+	must.Eq(t, out, eval3, must.Sprint("expected 3rd eval"))
 
-	// Check the stats
-	stats = b.Stats()
-	if stats.TotalReady != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalUnacked != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalBlocked != 2 {
-		t.Fatalf("bad: %#v", stats)
-	}
+	must.Eq(t, BrokerStats{TotalReady: 1, TotalUnacked: 1,
+		TotalBlocked: 3, TotalCancelable: 1}, getStats())
 
-	// Ack out
-	err = b.Ack(eval2.ID, token)
-	if err != nil {
-		t.Fatalf("err: %v", err)
-	}
-
-	// Check the stats
-	stats = b.Stats()
-	if stats.TotalReady != 2 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalUnacked != 0 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalBlocked != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-
-	// Dequeue should work
-	out, token, err = b.Dequeue(defaultSched, time.Second)
-	if err != nil {
-		t.Fatalf("err: %v", err)
-	}
-	if out != eval3 {
-		t.Fatalf("bad : %#v", out)
-	}
-
-	// Check the stats
-	stats = b.Stats()
-	if stats.TotalReady != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalUnacked != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalBlocked != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-
-	// Ack out
+	// Current wait index should be 4 but Ack to exercise behavior
+	// when newer eval has been written to state store and replicated
+	// but not yet written to broker. Ack should clear the rest of
+	// namespace-one blocked but leave namespace-two untouched
+	eval3.ModifyIndex = 8
 	err = b.Ack(eval3.ID, token)
-	if err != nil {
-		t.Fatalf("err: %v", err)
-	}
+	must.NoError(t, err)
 
-	// Check the stats
-	stats = b.Stats()
-	if stats.TotalReady != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalUnacked != 0 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalBlocked != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
+	must.Eq(t, BrokerStats{TotalReady: 1, TotalUnacked: 0,
+		TotalBlocked: 2, TotalCancelable: 2}, getStats())
 
-	// Dequeue should work
+	// Dequeue should get 5th eval
 	out, token, err = b.Dequeue(defaultSched, time.Second)
-	if err != nil {
-		t.Fatalf("err: %v", err)
-	}
-	if out != eval4 {
-		t.Fatalf("bad : %#v", out)
-	}
+	must.NoError(t, err)
+	must.Eq(t, out, eval5, must.Sprint("expected 5th eval"))
 
-	// Check the stats
-	stats = b.Stats()
-	if stats.TotalReady != 0 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalUnacked != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalBlocked != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
+	must.Eq(t, BrokerStats{TotalReady: 0, TotalUnacked: 1,
+		TotalBlocked: 2, TotalCancelable: 2}, getStats())
 
-	// Ack out
-	err = b.Ack(eval4.ID, token)
-	if err != nil {
-		t.Fatalf("err: %v", err)
-	}
-
-	// Check the stats
-	stats = b.Stats()
-	if stats.TotalReady != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalUnacked != 0 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalBlocked != 0 {
-		t.Fatalf("bad: %#v", stats)
-	}
-
-	// Dequeue should work
-	out, token, err = b.Dequeue(defaultSched, time.Second)
-	if err != nil {
-		t.Fatalf("err: %v", err)
-	}
-	if out != eval5 {
-		t.Fatalf("bad : %#v", out)
-	}
-
-	// Check the stats
-	stats = b.Stats()
-	if stats.TotalReady != 0 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalUnacked != 1 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalBlocked != 0 {
-		t.Fatalf("bad: %#v", stats)
-	}
-
-	// Ack out
+	// Ack with expected wait index, which should clear remaining
+	// namespace-two blocked evals
+	eval5.ModifyIndex = 7
 	err = b.Ack(eval5.ID, token)
-	if err != nil {
-		t.Fatalf("err: %v", err)
-	}
+	must.NoError(t, err)
 
-	// Check the stats
-	stats = b.Stats()
-	if stats.TotalReady != 0 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalUnacked != 0 {
-		t.Fatalf("bad: %#v", stats)
-	}
-	if stats.TotalBlocked != 0 {
-		t.Fatalf("bad: %#v", stats)
-	}
+	must.Eq(t, BrokerStats{TotalReady: 1, TotalUnacked: 0,
+		TotalBlocked: 0, TotalCancelable: 3}, getStats())
+
+	// Dequeue should get 7th eval because that's all that's left
+	out, token, err = b.Dequeue(defaultSched, time.Second)
+	must.NoError(t, err)
+	must.Eq(t, out, eval7, must.Sprint("expected 7th eval"))
+
+	must.Eq(t, BrokerStats{TotalReady: 0, TotalUnacked: 1,
+		TotalBlocked: 0, TotalCancelable: 3}, getStats())
+
+	// Last ack should leave the broker empty except for cancels
+	eval7.ModifyIndex = 7
+	err = b.Ack(eval7.ID, token)
+	must.NoError(t, err)
+
+	must.Eq(t, BrokerStats{TotalReady: 0, TotalUnacked: 0,
+		TotalBlocked: 0, TotalCancelable: 3}, getStats())
 }
 
 func TestEvalBroker_Enqueue_Disable(t *testing.T) {
@@ -813,18 +690,18 @@ func TestEvalBroker_Dequeue_FIFO(t *testing.T) {
 	b.SetEnabled(true)
 	NUM := 100
 
-	for i := 0; i < NUM; i++ {
+	for i := NUM; i > 0; i-- {
 		eval1 := mock.Eval()
 		eval1.CreateIndex = uint64(i)
 		eval1.ModifyIndex = uint64(i)
 		b.Enqueue(eval1)
 	}
 
-	for i := 0; i < NUM; i++ {
+	for i := 1; i < NUM; i++ {
 		out1, _, _ := b.Dequeue(defaultSched, time.Second)
-		if out1.CreateIndex != uint64(i) {
-			t.Fatalf("bad: %d %#v", i, out1)
-		}
+		must.Eq(t, out1.CreateIndex, uint64(i),
+			must.Sprintf("eval was not FIFO by CreateIndex"),
+		)
 	}
 }
 
@@ -1505,4 +1382,41 @@ func TestEvalBroker_NamespacedJobs(t *testing.T) {
 
 	require.Equal(1, len(b.blocked))
 
+}
+
+func TestEvalBroker_BlockedEvals_MarkForCancel(t *testing.T) {
+	ci.Parallel(t)
+
+	blocked := PendingEvaluations{}
+
+	// evals are pushed on the blocked queue FIFO by CreateIndex order, so Push
+	// them in reverse order here to assert we're getting them back out in the
+	// right order and not just as inserted
+	for i := 100; i > 0; i -= 10 {
+		eval := mock.Eval()
+		eval.JobID = "example"
+		eval.CreateIndex = uint64(i)
+		eval.ModifyIndex = uint64(i)
+		heap.Push(&blocked, eval)
+	}
+
+	canceled := blocked.MarkForCancel(40)
+	must.Eq(t, canceled.Len(), 3)
+	must.Eq(t, blocked.Len(), 7)
+
+	got := []uint64{}
+	for i := 0; i < 7; i++ {
+		raw := heap.Pop(&blocked)
+		must.NotNil(t, raw)
+		eval := raw.(*structs.Evaluation)
+		got = append(got, eval.CreateIndex)
+	}
+	must.Eq(t, []uint64{40, 50, 60, 70, 80, 90, 100}, got)
+
+	popped := canceled.PopN(2)
+	must.Len(t, 1, canceled)
+	must.Len(t, 2, popped)
+
+	must.Eq(t, popped[0].CreateIndex, 10)
+	must.Eq(t, popped[1].CreateIndex, 20)
 }
