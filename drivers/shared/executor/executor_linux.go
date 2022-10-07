@@ -120,30 +120,30 @@ func (l *LibcontainerExecutor) Launch(command *ExecCommand) (*ProcessState, erro
 	l.container = container
 
 	// Look up the binary path and make it executable
-	absPath, err := lookupTaskBin(command)
+	absPath, fromMount, err := lookupTaskBin(command)
 
 	if err != nil {
 		return nil, err
 	}
-
-	if err := makeExecutable(absPath); err != nil {
-		return nil, err
-	}
-
 	path := absPath
 
-	// Ensure that the path is contained in the chroot, and find it relative to the container
-	rel, err := filepath.Rel(command.TaskDir, path)
-	if err != nil {
-		return nil, fmt.Errorf("failed to determine relative path base=%q target=%q: %v", command.TaskDir, path, err)
-	}
+	if !fromMount {
+		if err := makeExecutable(absPath); err != nil {
+			return nil, err
+		}
 
-	// Turn relative-to-chroot path into absolute path to avoid
-	// libcontainer trying to resolve the binary using $PATH.
-	// Do *not* use filepath.Join as it will translate ".."s returned by
-	// filepath.Rel. Prepending "/" will cause the path to be rooted in the
-	// chroot which is the desired behavior.
-	path = "/" + rel
+		// Ensure that the path is contained in the chroot, and find it relative to the container
+		rel, err := filepath.Rel(command.TaskDir, path)
+		if err != nil {
+			return nil, fmt.Errorf("failed to determine relative path base=%q target=%q: %v", command.TaskDir, path, err)
+		}
+		// Turn relative-to-chroot path into absolute path to avoid
+		// libcontainer trying to resolve the binary using $PATH.
+		// Do *not* use filepath.Join as it will translate ".."s returned by
+		// filepath.Rel. Prepending "/" will cause the path to be rooted in the
+		// chroot which is the desired behavior.
+		path = "/" + rel
+	}
 
 	combined := append([]string{path}, command.Args...)
 	stdout, err := command.Stdout()
@@ -807,7 +807,7 @@ func cmdMounts(mounts []*drivers.MountConfig) []*lconfigs.Mount {
 
 // lookupTaskBin finds the file `bin` in taskDir/local, taskDir in that order, then performs
 // a PATH search inside taskDir. It returns an absolute path. See also executor.lookupBin
-func lookupTaskBin(command *ExecCommand) (string, error) {
+func lookupTaskBin(command *ExecCommand) (string, bool, error) {
 	taskDir := command.TaskDir
 	bin := command.Cmd
 
@@ -815,22 +815,31 @@ func lookupTaskBin(command *ExecCommand) (string, error) {
 	localDir := filepath.Join(taskDir, allocdir.TaskLocal)
 	local := filepath.Join(localDir, bin)
 	if _, err := os.Stat(local); err == nil {
-		return local, nil
+		return local, false, nil
 	}
 
 	// Check at the root of the task's directory
 	root := filepath.Join(taskDir, bin)
 	if _, err := os.Stat(root); err == nil {
-		return root, nil
+		return root, false, nil
+	}
+
+	// Check in our mounts
+	for _, mount := range command.Mounts {
+		inMount := filepath.Join(mount.HostPath, bin)
+		if _, err := os.Stat(inMount); err == nil {
+			return filepath.Join(mount.TaskPath, bin), true, nil
+		}
 	}
 
 	if strings.Contains(bin, "/") {
-		return "", fmt.Errorf("file %s not found under path %s", bin, taskDir)
+		return "", false, fmt.Errorf("file %s not found under path %s", bin, taskDir)
 	}
 
 	path := "/usr/local/bin:/usr/bin:/bin"
 
-	return lookPathIn(path, taskDir, bin)
+	pathFromPath, err := lookPathIn(path, taskDir, bin)
+	return pathFromPath, false, err
 }
 
 // lookPathIn looks for a file with PATH inside the directory root. Like exec.LookPath

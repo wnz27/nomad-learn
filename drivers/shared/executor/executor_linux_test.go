@@ -430,7 +430,7 @@ func TestUniversalExecutor_LookupTaskBin(t *testing.T) {
 
 	// Lookout with an absolute path to the binary
 	cmd.Cmd = "/foo/tmp.txt"
-	_, err = lookupTaskBin(cmd)
+	_, _, err = lookupTaskBin(cmd)
 	require.NoError(err)
 
 	// Write a file under local subdir
@@ -440,12 +440,12 @@ func TestUniversalExecutor_LookupTaskBin(t *testing.T) {
 
 	// Lookup with file name, should find the one we wrote above
 	cmd.Cmd = "tmp.txt"
-	_, err = lookupTaskBin(cmd)
+	_, _, err = lookupTaskBin(cmd)
 	require.NoError(err)
 
 	// Lookup a host absolute path
 	cmd.Cmd = "/bin/sh"
-	_, err = lookupTaskBin(cmd)
+	_, _, err = lookupTaskBin(cmd)
 	require.Error(err)
 }
 
