@@ -49,6 +49,11 @@ var minJobRegisterAtomicEvalVersion = version.Must(version.NewVersion("0.12.1"))
 
 var minOneTimeAuthenticationTokenVersion = version.Must(version.NewVersion("1.1.0"))
 
+// minACLTokenExpiryVersion is the Nomad version at which the ACL token
+// expiration feature was introduced. It forms the minimum version servers must
+// meet before the feature can be used.
+var minACLTokenExpiryVersion = version.Must(version.NewVersion("1.4.0"))
+
 // monitorLeadership is used to monitor if we acquire or lose our role
 // as the leader in the Raft cluster. There is some work the leader is
 // expected to do, so we must react to changes
@@ -822,6 +827,9 @@ func (s *Server) schedulePeriodic(stopCh chan struct{}) {
 				s.evalBroker.Enqueue(s.coreJobEval(structs.CoreJobOneTimeTokenGC, index))
 			}
 		case <-localTokenExpiredGC.C:
+			if !ServersMeetMinimumVersion(s.Members(), s.Region(), minACLTokenExpiryVersion, false) {
+				continue
+			}
 			if index, ok := s.getLatestIndex(); ok {
 				s.evalBroker.Enqueue(s.coreJobEval(structs.CoreJobLocalTokenExpiredGC, index))
 			}
@@ -853,6 +861,9 @@ func (s *Server) schedulePeriodicAuthoritative(stopCh chan struct{}) {
 	for {
 		select {
 		case <-globalTokenExpiredGC.C:
+			if !ServersMeetMinimumVersion(s.Members(), AllRegions, minACLTokenExpiryVersion, false) {
+				continue
+			}
 			if index, ok := s.getLatestIndex(); ok {
 				s.evalBroker.Enqueue(s.coreJobEval(structs.CoreJobGlobalTokenExpiredGC, index))
 			}

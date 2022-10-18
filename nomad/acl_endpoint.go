@@ -518,6 +518,27 @@ func (a *ACL) UpsertTokens(args *structs.ACLTokenUpsertRequest, reply *structs.A
 	// Validate each token
 	for idx, token := range args.Tokens {
 
+		// If the token has expiry, ensure that all the servers meet the
+		// minimum requirement to handle the feature. If the token is global,
+		// all servers in all federated regions must meet this requirement.
+		// Local tokens only need the Raft member servers of the local region
+		// to meet the requirements.
+		if token.HasExpirationTime() {
+
+			var region string
+
+			if token.Global {
+				region = AllRegions
+			} else {
+				region = a.srv.Region()
+			}
+
+			if !ServersMeetMinimumVersion(a.srv.Members(), region, minACLTokenExpiryVersion, false) {
+				return fmt.Errorf("all servers should be running version %v or later to use tokens with expiration",
+					minACLTokenExpiryVersion)
+			}
+		}
+
 		// Store any existing token found, so we can perform the correct update
 		// validation.
 		var existingToken *structs.ACLToken
