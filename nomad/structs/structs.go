@@ -328,6 +328,14 @@ func (q QueryOptions) RequestNamespace() string {
 	return q.Namespace
 }
 
+func (q QueryOptions) RequestToken() string {
+	return q.AuthToken
+}
+
+func (q QueryOptions) SetRegion(region string) {
+	q.Region = region
+}
+
 // IsRead only applies to reads, so always true.
 func (q QueryOptions) IsRead() bool {
 	return true
@@ -422,6 +430,14 @@ func (w WriteRequest) RequestNamespace() string {
 		return DefaultNamespace
 	}
 	return w.Namespace
+}
+
+func (w WriteRequest) RequestToken() string {
+	return w.AuthToken
+}
+
+func (w WriteRequest) SetRegion(region string) {
+	w.Region = region
 }
 
 // IsRead only applies to writes, always false.
