@@ -13,6 +13,7 @@ import (
 	"github.com/hashicorp/go-memdb"
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/nomad/helper/pointer"
+	"github.com/hashicorp/nomad/nomad/state/paginator"
 	"github.com/hashicorp/nomad/nomad/stream"
 	"github.com/hashicorp/nomad/nomad/structs"
 )
@@ -3141,6 +3142,62 @@ func (s *StateStore) updateEvalModifyIndex(txn *txn, index uint64, evalID string
 		return fmt.Errorf("index update failed: %v", err)
 	}
 	return nil
+}
+
+// DeleteEvalsByFilter is used to delete all evals that are both safe to delete
+// and match a filter.
+func (s *StateStore) DeleteEvalsByFilter(index uint64, filterExpr string, pageToken string, perPage int32) error {
+	txn := s.db.WriteTxn(index)
+	defer txn.Abort()
+
+	// These are always user-initiated, so ensure the eval broker is paused.
+	_, schedConfig, err := s.schedulerConfigTxn(txn)
+	if err != nil {
+		return err
+	}
+	if schedConfig == nil || !schedConfig.PauseEvalBroker {
+		return errors.New("eval broker is enabled; eval broker must be paused to delete evals")
+	}
+
+	iter, err := s.Evals(nil, SortDefault)
+	if err != nil {
+		return fmt.Errorf("failed to lookup evals: %v", err)
+	}
+
+	paginator, err := paginator.NewPaginator(iter,
+		paginator.NewStructsTokenizer(iter,
+			paginator.StructsTokenizerOptions{WithID: true}),
+
+		[]paginator.Filter{paginator.GenericFilter{
+			Allow: func(raw interface{}) (bool, error) {
+				eval := raw.(*structs.Evaluation)
+				return s.EvalIsUserDeleteSafe(nil, eval)
+			},
+		}},
+		structs.QueryOptions{
+			Filter:    filterExpr,
+			PerPage:   perPage,
+			NextToken: pageToken,
+		},
+		func(raw interface{}) error {
+			eval := raw.(*structs.Evaluation)
+			if err := txn.Delete("evals", eval); err != nil {
+				return fmt.Errorf("eval delete failed: %v", err)
+			}
+			return nil
+		})
+
+	if err != nil {
+		return fmt.Errorf("failed to create paginator: %v", err)
+	}
+
+	_, err = paginator.Page()
+	if err != nil {
+		return err
+	}
+
+	err = txn.Commit()
+	return err
 }
 
 // EvalIsUserDeleteSafe ensures an evaluation is safe to delete based on its

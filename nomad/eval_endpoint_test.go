@@ -2,12 +2,18 @@ package nomad
 
 import (
 	"fmt"
+	"io"
+	"net"
+	"os"
+	"path"
 	"reflect"
 	"strings"
 	"testing"
 	"time"
 
 	memdb "github.com/hashicorp/go-memdb"
+	"github.com/hashicorp/go-msgpack/codec"
+	"github.com/hashicorp/go-set"
 	msgpackrpc "github.com/hashicorp/net-rpc-msgpackrpc"
 	"github.com/hashicorp/nomad/acl"
 	"github.com/hashicorp/nomad/ci"
@@ -862,6 +868,94 @@ func TestEvalEndpoint_Delete(t *testing.T) {
 		var resp structs.EvalDeleteResponse
 		err := msgpackrpc.CallWithCodec(codec, structs.EvalDeleteRPCMethod, get, &resp)
 		must.EqError(t, err, structs.ErrPermissionDenied.Error())
+	})
+
+	t.Run("successful delete by filter", func(t *testing.T) {
+
+		testServer, rootToken, cleanup := setup(t)
+		defer cleanup()
+		codec := rpcClient(t, testServer)
+
+		// Ensure broker is disabled
+		setBrokerEnabled(t, testServer, false)
+
+		evalCount := 10000
+		index := uint64(100)
+
+		store := testServer.fsm.State()
+
+		// Create a large set of pending evaluations
+
+		evals := []*structs.Evaluation{}
+		for i := 0; i < evalCount; i++ {
+			mockEval := mock.Eval()
+			evals = append(evals, mockEval)
+		}
+		must.NoError(t, store.UpsertEvals(
+			structs.MsgTypeTestSetup, index, evals))
+
+		// Create some evaluations we don't want to delete
+
+		evalsToKeep := []*structs.Evaluation{}
+		for i := 0; i < 3; i++ {
+			mockEval := mock.Eval()
+			mockEval.JobID = "keepme"
+			evalsToKeep = append(evalsToKeep, mockEval)
+		}
+		index++
+		must.NoError(t, store.UpsertEvals(
+			structs.MsgTypeTestSetup, index, evalsToKeep))
+
+		// Create a job with running allocs and evaluations those allocs reference
+
+		job := mock.Job()
+		job.ID = "notsafetodelete"
+		job.Status = structs.JobStatusRunning
+		index++
+		must.NoError(t, store.UpsertJob(structs.MsgTypeTestSetup, index, job))
+
+		evalsNotSafeToDelete := []*structs.Evaluation{}
+		for i := 0; i < 3; i++ {
+			mockEval := mock.Eval()
+			mockEval.JobID = job.ID
+			evalsNotSafeToDelete = append(evalsNotSafeToDelete, mockEval)
+		}
+		index++
+		must.NoError(t, store.UpsertEvals(
+			structs.MsgTypeTestSetup, index, evalsNotSafeToDelete))
+
+		allocs := []*structs.Allocation{}
+		for i := 0; i < 3; i++ {
+			alloc := mock.Alloc()
+			alloc.ClientStatus = structs.AllocClientStatusRunning
+			alloc.EvalID = evalsNotSafeToDelete[i].ID
+			allocs = append(allocs, alloc)
+		}
+		index++
+		must.NoError(t, store.UpsertAllocs(structs.MsgTypeTestSetup, index, allocs))
+
+		// Delete all the unwanted evals
+
+		get := &structs.EvalDeleteRequest{
+			Filter:       "JobID != \"keepme\"",
+			WriteRequest: structs.WriteRequest{AuthToken: rootToken.SecretID, Region: "global"},
+		}
+		var resp structs.EvalDeleteResponse
+		must.NoError(t, msgpackrpc.CallWithCodec(codec, structs.EvalDeleteRPCMethod, get, &resp))
+		must.Eq(t, resp.Count, evalCount)
+
+		// Assert we didn't delete the filtered evals
+		gotKeptEvals, err := store.EvalsByJob(nil, job.Namespace, "keepme")
+		must.NoError(t, err)
+		must.Len(t, 3, gotKeptEvals)
+		must.Eq(t, set.From(evalsToKeep), set.From(gotKeptEvals))
+
+		// Assert we didn't delete the evals that were not safe to delete
+		gotNotSafeEvals, err := store.EvalsByJob(nil, job.Namespace, "notsafetodelete")
+		must.NoError(t, err)
+		must.Len(t, 3, gotNotSafeEvals)
+		must.Eq(t, set.From(evalsNotSafeToDelete), set.From(gotNotSafeEvals))
+
 	})
 
 }
@@ -1837,4 +1931,100 @@ func TestEvalEndpoint_Reblock(t *testing.T) {
 	if bStats.TotalBlocked+bStats.TotalEscaped == 0 {
 		t.Fatalf("ReblockEval didn't insert eval into the blocked eval tracker")
 	}
+}
+
+func TestEvalEndpoint_BigStateDelete(t *testing.T) {
+	ci.Parallel(t)
+
+	dir := t.TempDir()
+
+	// testServer, rootToken, cleanupLS := TestACLServer(t, func(c *Config) {
+	// 	c.BootstrapExpect = 1
+	// 	c.DevMode = false
+	// 	c.DataDir = path.Join(dir, "server1")
+	// })
+	// defer cleanupLS()
+
+	// testutil.WaitForLeader(t, testServer.RPC)
+
+	testServer, rootToken, cleanupFn := TestACLServer(t, func(c *Config) {
+		c.NumSchedulers = 0
+		c.DevMode = false
+		c.DataDir = path.Join(dir, "server1")
+	})
+	defer cleanupFn()
+
+	testutil.WaitForLeader(t, testServer.RPC)
+
+	t.Log("disabling eval broker")
+
+	testServer.evalBroker.SetEnabled(false)
+	_, schedulerConfig, err := testServer.fsm.State().SchedulerConfig()
+	must.NoError(t, err)
+	must.NotNil(t, schedulerConfig)
+	schedulerConfig.PauseEvalBroker = true
+	must.NoError(t, testServer.fsm.State().SchedulerSetConfig(10, schedulerConfig))
+
+	clientCodec := rpcClient(t, testServer)
+
+	const numEvals = 1000000
+
+	t.Logf("creating %d evaluations", numEvals)
+
+	// Create and upsert an evaluation.
+	for i := 0; i < numEvals; i++ {
+		mockEval := mock.Eval()
+		must.NoError(t, testServer.fsm.State().UpsertEvals(
+			structs.MsgTypeTestSetup, 20, []*structs.Evaluation{mockEval}))
+	}
+
+	listReq := &structs.EvalListRequest{
+		QueryOptions: structs.QueryOptions{
+			AuthToken: rootToken.SecretID,
+			Region:    "global",
+		},
+	}
+	var listResp structs.EvalListResponse
+	err = msgpackrpc.CallWithCodec(clientCodec, "Eval.List", listReq, &listResp)
+	must.NoError(t, err)
+	must.Len(t, numEvals, listResp.Evaluations)
+	must.NonZero(t, listResp.Index)
+
+	t.Log("creating snapshot")
+
+	handler, err := testServer.StreamingRpcHandler("Operator.SnapshotSave")
+	must.NoError(t, err)
+
+	p1, p2 := net.Pipe()
+	defer p1.Close()
+	defer p2.Close()
+
+	// start handler
+	go handler(p2)
+
+	var req structs.SnapshotSaveRequest
+	var resp structs.SnapshotSaveResponse
+
+	req.Region = "global"
+	req.AuthToken = rootToken.SecretID
+
+	// send request
+	encoder := codec.NewEncoder(p1, structs.MsgpackHandle)
+	err = encoder.Encode(&req)
+	must.NoError(t, err)
+
+	decoder := codec.NewDecoder(p1, structs.MsgpackHandle)
+	err = decoder.Decode(&resp)
+	must.NoError(t, err)
+	must.Eq(t, resp.ErrorMsg, "")
+	must.NonZero(t, resp.Index)
+	must.NotEq(t, resp.SnapshotChecksum, "")
+	must.StrContains(t, resp.SnapshotChecksum, "sha-256=")
+
+	snapFile, err := os.Create("/Users/timgross/ws/nomad/tmp/example.snap")
+	must.NoError(t, err)
+
+	io.Copy(snapFile, p1)
+	snapFile.Close()
+
 }
